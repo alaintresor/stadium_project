@@ -33,7 +33,7 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
          <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                <li class="menu-title">MENU</li>
-               <?php if ($_SESSION['ADMIN_ROLE'] != 1) { ?>
+               <?php if ($_SESSION['ADMIN_ROLE'] == 0) { ?>
                   <li class="menu-item-has-children dropdown">
                      <a href="fixtures_management.php"> FIXTURES </a>
                   </li>
@@ -45,6 +45,16 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                   </li>
                   <li class="menu-item-has-children dropdown">
                      <a href="contact_us.php"> CONTACT US</a>
+                  </li>
+               <?php } else if ($_SESSION['ADMIN_ROLE'] == 1) { ?>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="fixtures_management.php"> SELECT FIXTURES </a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="result_management.php">PRICE & SEAT </a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="postpone_management.php"> REPORT </a>
                   </li>
                <?php } ?>
             </ul>

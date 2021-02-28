@@ -92,6 +92,10 @@ if (isset($_POST['submit'])) {
 								<label for="descriptions" class=" form-control-label">Descriptions </label>
 								<textarea name="descriptions" rows="3" class="form-control" required value="<?php echo $mobile ?>">Enter match descriptions</textarea>
 							</div>
+							<div class="form-group">
+								<label for="cover image" class=" form-control-label">Cover Image </label>
+								<input type="file" name="image" class="form-control" required value="<?php echo $mobile ?>">
+							</div>
 
 							<button id="payment-button" name="submit" type="submit" class="btn btn-lg btn-info btn-block">
 								<span id="payment-button-amount">SUBMIT</span>
