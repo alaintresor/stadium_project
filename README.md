@@ -1,1 +1,0 @@
-# studium_project

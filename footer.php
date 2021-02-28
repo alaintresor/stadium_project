@@ -6,22 +6,19 @@
 					<div class="footer-nav">
 		                <ul>
 		                   <li><a href="index.php">Home</a></li>
-			  		   <li><a href="concert_events.php">Concepts</a></li>
+			  		   <li><a href="concert_events.php">Fixtures</a></li>
 			  		   <li><a href="login.php">Login</a></li>
 		                   </ul>
 		              </div>
 				</div>
 				<div class="col_1_of_4 span_1_of_4">
 					<div class="textcontact">
-						<p>COPYRIGHT © 2018. ALL RIGHTS RESERVED.
+						<p>COPYRIGHT © 2021. Project By Regis.
 						</p>
 					</div>
 				</div>
 				<div class="col_1_of_4 span_1_of_4">
-					<div class=social>
-					    <a href="https://gr.linkedin.com/in/vasilis-tsakiris-a2932b162"><img src="images/linkedin.png" alt="" width="42" height="42"/></a>
-                        <a href="https://github.com/vasilisDev"><img src="images/github.png" alt="" width="42" height="42"/></a>
-					</div>
+				
 				</div>
 				<div class="clear"></div>
 			</div>
