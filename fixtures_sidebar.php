@@ -1,6 +1,4 @@
-<!--
-@author: Vasilis Tsakiris
--->
+
  			<div class="listview_1_of_3 images_1_of_3">
 					<h3>Live match(es)</h3>	
 					<?php

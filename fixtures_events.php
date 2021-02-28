@@ -1,6 +1,4 @@
-<!--
-@author: Vasilis Tsakiris
--->
+
 <?php include('header.php');?>
 <div class="content">
 	<div class="wrap">
@@ -15,10 +13,12 @@
                     <div class="col_1_of_4 span_1_of_4">
 					<div class="imageRow">
 						  	<div class="single">
-						  		<a href="about.php?id=<?php echo $m['concert_id'];?>"><img src="<?php echo $m['image'];?>" alt="" /></a>
+						  	<div class="listimg listimg_1_of_2">
+						 <img src="images/vs1.jpg">
+					</div>
 						  	</div>
 						  	<div class="movie-text">
-						  		<h4 class="h-text"><a href="about.php?id=<?php echo $m['concert_id'];?>"><?php echo $m['concert_name'];?></a></h4>
+						  		<h4 class="h-text"><a href="about.php?id=<?php echo $m['concert_id'];?>">MUKURA VC 0-1 MUHANGA FC</a></h4>
 						  		Members:<Span class="color2"><?php echo $m['cast'];?></span><br>	  		
 						  	</div>
 		  				</div>
