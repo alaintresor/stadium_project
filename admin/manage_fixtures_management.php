@@ -75,10 +75,13 @@ if (isset($_POST['submit'])) {
 								<label for="time" class=" form-control-label">Time</label>
 								<input type="time" name="name" class="form-control" required value="<?php echo $username ?>">
 							</div>
-
+							<div class="form-group">
+								<label for="homeTeam" class=" form-control-label">Competition</label>
+								<input type="text" name="competition" placeholder="Enter which competition " class="form-control" required value="<?php echo $email ?>">
+							</div>
 							<div class="form-group">
 								<label for="homeTeam" class=" form-control-label">Home Team</label>
-								<input type="email" name="home" placeholder="Enter home team" class="form-control" required value="<?php echo $email ?>">
+								<input type="text" name="home" placeholder="Enter home team" class="form-control" required value="<?php echo $email ?>">
 							</div>
 							<div class="form-group">
 								<label for="AwayTeam" class=" form-control-label">Away Team </label>
