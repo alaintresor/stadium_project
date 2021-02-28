@@ -98,7 +98,7 @@ if(!isset($_SESSION['user']))
 				}
 				?>
 					</div>		
-		         <?php include('concert_sidebar.php');?>
+		         <?php include('fixtures_sidebar.php');?>
 			</div>
 			<div class="about span_1_of_2">	
 						<h3>Prepaid Details</h3>

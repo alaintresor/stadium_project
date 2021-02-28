@@ -110,7 +110,7 @@ if(!isset($_SESSION['user']))
 							</tr>
 						</table>
 					</div>		
-				<?php include('concert_sidebar.php');?>
+				<?php include('fixtures_sidebar.php');?>
 			</div>
 				<div class="clear"></div>		
 			</div>
