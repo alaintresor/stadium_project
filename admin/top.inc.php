@@ -25,6 +25,8 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+   <script src="assets/js/bootstrap.js"></script>
+   <script src="/"></script>
 </head>
 
 <body>
@@ -54,7 +56,7 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                      <a href="select_fixtures.php"> SELECT FIXTURES </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
-                     <a href="result_management.php">PRICE & SEAT </a>
+                     <a href="seats_management.php">PRICE & SEAT </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
                      <a href="postpone_management.php"> REPORT </a>

@@ -3,26 +3,15 @@ require('top.inc.php');
 isAdmin();
 if (isset($_GET['type']) && $_GET['type'] != '') {
 	$type = get_safe_value($con, $_GET['type']);
-	if ($type == 'status') {
-		$operation = get_safe_value($con, $_GET['operation']);
-		$id = get_safe_value($con, $_GET['id']);
-		if ($operation == 'active') {
-			$status = '1';
-		} else {
-			$status = '0';
-		}
-		$update_status_sql = "update admin_users set status='$status' where id='$id'";
-		mysqli_query($con, $update_status_sql);
-	}
 
 	if ($type == 'delete') {
 		$id = get_safe_value($con, $_GET['id']);
-		$delete_sql = "delete from admin_users where id='$id'";
+		$delete_sql = "delete from fixtures where id='$id'";
 		mysqli_query($con, $delete_sql);
 	}
 }
 
-$sql = "select * from admin_users where role=1 order by id desc";
+$sql = "select * from fixtures";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -49,25 +38,35 @@ $res = mysqli_query($con, $sql);
 								<thead>
 									<tr>
 										<th class="serial">#</th>
-										<th width="2%">ID</th>
-										<th width="20%">Username</th>
-										<th width="20%">Password</th>
-										<th width="20%">Email</th>
-										<th width="10%">Mobile</th>
-										<th width="26%"></th>
+										<th>ID</th>
+										<th>Date</th>
+										<th>Time</th>
+										<th>competition</th>
+										<th>Home</th>
+										<th>Away</th>
+										<th>Location</th>
+										<th>Desrciption</th>
+										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
 									$i = 1;
-									while ($row = mysqli_fetch_assoc($res)) { ?>
+									while ($row = mysqli_fetch_assoc($res)) {
+										$homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}'"));
+
+										$awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}'"));
+									?>
 										<tr>
 											<td class="serial"><?php echo $i ?></td>
 											<td><?php echo $row['id'] ?></td>
-											<td><?php echo $row['username'] ?></td>
-											<td><?php echo $row['password'] ?></td>
-											<td><?php echo $row['email'] ?></td>
-											<td><?php echo $row['mobile'] ?></td>
+											<td><?php echo $row['date'] ?></td>
+											<td><?php echo $row['time'] ?></td>
+											<td><?php echo $row['competition'] ?></td>
+											<td><?php echo $homeTeam[0] ?></td>
+											<td><?php echo $awayTeam[0] ?></td>
+											<td><?php echo $row['location'] ?></td>
+											<td><?php echo $row['description'] ?></td>
 
 											<td>
 												<?php
@@ -76,7 +75,7 @@ $res = mysqli_query($con, $sql);
 												} else {
 													echo "<span class='badge badge-pending'><a href='?type=status&operation=active&id=" . $row['id'] . "'>Deactive</a></span>&nbsp;";
 												}
-												echo "<span class='badge badge-edit'><a href='manage_vendor_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
+												echo "<span class='badge badge-edit'><a href='manage_fixtures_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
 
 												echo "<span class='badge badge-delete'><a href='?type=delete&id=" . $row['id'] . "'>Delete</a></span>";
 

@@ -1,58 +1,71 @@
 <?php
 require('top.inc.php');
 isAdmin();
-$username = '';
-$password = '';
-$email = '';
-$mobile = '';
+$date = '';
+$time = '';
+$competition = '';
+$homeId = '';
+$awayId = '';
+$location = '';
+$descriptions = '';
 
 $msg = '';
 if (isset($_GET['id']) && $_GET['id'] != '') {
 	$image_required = '';
 	$id = get_safe_value($con, $_GET['id']);
-	$res = mysqli_query($con, "select * from admin_users where id='$id'");
+	$res = mysqli_query($con, "select * from fixtures where id='$id'");
 	$check = mysqli_num_rows($res);
 	if ($check > 0) {
 		$row = mysqli_fetch_assoc($res);
-		$username = $row['username'];
-		$email = $row['email'];
-		$mobile = $row['mobile'];
-		$password = $row['password'];
+		$date = $row['date'];
+		$time = $row['time'];
+		$competition = $row['competition'];
+		$homeId = $row['home_team'];
+		$awayId = $row['away_team'];
+		$location = $row['location'];
+		$descriptions = $row['description'];
 	} else {
-		header('location:vendor_management.php');
+		header('location:fixtures_management.php');
 		die();
 	}
 }
 
 if (isset($_POST['submit'])) {
-	$username = get_safe_value($con, $_POST['username']);
-	$email = get_safe_value($con, $_POST['email']);
-	$mobile = get_safe_value($con, $_POST['mobile']);
-	$password = get_safe_value($con, $_POST['password']);
+	$date = get_safe_value($con, $_POST['date']);
+	$time = get_safe_value($con, $_POST['time']);
+	$competition = get_safe_value($con, $_POST['competition']);
+	$homeId = get_safe_value($con, $_POST['homeId']);
+	$awayId = get_safe_value($con, $_POST['awayId']);
+	$location = get_safe_value($con, $_POST['location']);
+	$descriptions = get_safe_value($con, $_POST['descriptions']);
+	if (isset($_GET['id']) && $_GET['id'] != '') {
+	} else {
+		$img = "../images/upload/" . $_FILES['image']['name'];
+		$imgName =  $_FILES['image']['name'];
+		$target_dir = "../images/upload/";
+		$target_photo = $target_dir . basename($_FILES["image"]["name"]);
 
-	$res = mysqli_query($con, "select * from admin_users where username='$username'");
-	$check = mysqli_num_rows($res);
-	if ($check > 0) {
-		if (isset($_GET['id']) && $_GET['id'] != '') {
-			$getData = mysqli_fetch_assoc($res);
-			if ($id == $getData['id']) {
-			} else {
-				$msg = "Username already exist";
-			}
-		} else {
-			$msg = "Username already exist";
+		// Select file type
+		$imageFileType = strtolower(pathinfo($target_photo, PATHINFO_EXTENSION));
+
+		// Valid file extensions
+		$extensions_arr = array("jpg", "jpeg", "png", "gif");
+		if (!in_array($imageFileType, $extensions_arr)) {
+			$msg = "Please select real image file";
 		}
 	}
 
-
 	if ($msg == '') {
 		if (isset($_GET['id']) && $_GET['id'] != '') {
-			$update_sql = "update admin_users set username='$username',password='$password',email='$email',mobile='$mobile' where id='$id'";
+			$update_sql = "update fixtures set date='$date',time='$time',competition='$competition',home_team='$homeId',way_team='$awayId',location='$location',description='$descriptions' where id='$id'";
 			mysqli_query($con, $update_sql);
 		} else {
-			mysqli_query($con, "insert into admin_users(username,password,email,mobile,role,status) values('$username','$password','$email','$mobile',1,1)");
+			$done = mysqli_query($con, "INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`, `status`) VALUES (NULL, '$date', '$time', '$competition', '$homeId', '$awayId', '$location', '$descriptions', '$img', 'no');");
+			if ($done) {
+				$isUploaded = move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $logoName);
+			}
 		}
-		header('location:vendor_management.php');
+		header('location:fixtures_management.php');
 		die();
 	}
 }
@@ -69,36 +82,39 @@ if (isset($_POST['submit'])) {
 
 							<div class="form-group">
 								<label for="date" class=" form-control-label">Date</label>
-								<input type="date" name="name" class="form-control" required value="<?php echo $username ?>">
+								<input type="date" name="date" class="form-control" required value="<?php echo $date ?>">
 							</div>
 							<div class="form-group">
 								<label for="time" class=" form-control-label">Time</label>
-								<input type="time" name="name" class="form-control" required value="<?php echo $username ?>">
+								<input type="time" name="time" class="form-control" required value="<?php echo $time ?>">
 							</div>
 							<div class="form-group">
 								<label for="homeTeam" class=" form-control-label">Competition</label>
-								<input type="text" name="competition" placeholder="Enter which competition " class="form-control" required value="<?php echo $email ?>">
+								<input type="text" name="competition" placeholder="Enter which competition " class="form-control" required value="<?php echo $competition ?>">
 							</div>
 							<div class="form-group">
-								<label for="homeTeam" class=" form-control-label">Home Team</label>
-								<input type="text" name="home" placeholder="Enter home team" class="form-control" required value="<?php echo $email ?>">
+								<label for="homeTeam" class=" form-control-label">Home Team ID</label>
+								<input type="text" name="homeId" placeholder="Enter home team ID" class="form-control" required value="<?php echo $homeId ?>">
 							</div>
 							<div class="form-group">
-								<label for="AwayTeam" class=" form-control-label">Away Team </label>
-								<input type="text" name="contact" placeholder="Enter Away Team" class="form-control" required value="<?php echo $mobile ?>">
+								<label for="AwayTeam" class=" form-control-label">Away Team ID</label>
+								<input type="text" name="awayId" placeholder="Enter Away Team ID" class="form-control" required value="<?php echo $awayId ?>">
 							</div>
 							<div class="form-group">
 								<label for="Location" class=" form-control-label">Location </label>
-								<input type="text" name="location" placeholder="Enter match loction" class="form-control" required value="<?php echo $mobile ?>">
+								<input type="text" name="location" placeholder="Enter match loction" class="form-control" required value="<?php echo $location ?>">
 							</div>
 							<div class="form-group">
 								<label for="descriptions" class=" form-control-label">Descriptions </label>
-								<textarea name="descriptions" rows="3" class="form-control" required value="<?php echo $mobile ?>">Enter match descriptions</textarea>
+								<textarea name="descriptions" rows="3" class="form-control" required placeholder="Enter match descriptions"><?php echo $descriptions ?></textarea>
 							</div>
-							<div class="form-group">
-								<label for="cover image" class=" form-control-label">Cover Image </label>
-								<input type="file" name="image" class="form-control" required value="<?php echo $mobile ?>">
-							</div>
+							<?php if (isset($_GET['id']) && $_GET['id'] != '') {
+							} else { ?>
+								<div class="form-group">
+									<label for="cover image" class=" form-control-label">Cover Image </label>
+									<input type="file" name="image" class="form-control" required>
+								</div>
+							<?php } ?>
 
 							<button id="payment-button" name="submit" type="submit" class="btn btn-lg btn-info btn-block">
 								<span id="payment-button-amount">SUBMIT</span>

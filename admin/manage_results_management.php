@@ -67,25 +67,25 @@ if (isset($_POST['submit'])) {
                         <div class="card-body card-block">
 
                             <div class="form-group">
-                                <label for="date" class=" form-control-label">Fexture Id</label>
-                                <input type="text" name="name" class="form-control" required value="<?php echo $username ?>">
+                                <label for="date" class=" form-control-label">Fixture Id</label>
+                                <input type="text" name="fixtureId" id="fixture" onchange="selectTeams()" class="form-control" placeholder="Enter fixture Id" required value="<?php echo $fixtureId ?>">
                             </div>
                             <div class="form-group">
                                 <label for="date" class=" form-control-label">Home Team</label>
-                                <input type="text" class="form-control" required value="<?php echo $username ?>" disabled>
+                                <input type="text" class="form-control" value="" id="home" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="time" class=" form-control-label">Home Team result</label>
-                                <input type="text" name="homeResult" class="form-control" required value="<?php echo $username ?>">
+                                <input type="text" name="homeResult" class="form-control" required value="<?php echo $homeResult ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="homeTeam" class=" form-control-label">Away Team</label>
-                                <input type="text" class="form-control" required value="<?php echo $email ?>" disabled>
+                                <input type="text" class="form-control" required value="" id="away" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="text" class=" form-control-label">Away Team result</label>
-                                <input type="text" name="awayResult" class="form-control" required value="<?php echo $username ?>">
+                                <input type="text" name="awayResult" class="form-control" required value="<?php echo $awayResult ?>">
                             </div>
 
                             <button id="payment-button" name="submit" type="submit" class="btn btn-lg btn-info btn-block">
@@ -99,7 +99,50 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
+<script>
+    const selectTeams = () => {
 
+        const getOne = () => {
+            let id = $("#fixture").val();
+            let team = 1;
+            $.ajax({
+                url: "getTeam.php",
+                type: "POST",
+                data: {
+                    id,
+                    team
+                },
+                success: function(data) {
+
+                    $("#home").value(data);
+
+                }
+
+            })
+        }
+
+        const getTwo = () => {
+            let id = $("#fixture").val();
+            let team = 2;
+            $.ajax({
+                url: "getTeam.php",
+                type: "POST",
+                data: {
+                    id,
+                    team
+                },
+                success: function(data) {
+
+                    $("#away").value(data);
+
+                }
+
+            })
+        }
+        getOne();
+        getTwo();
+    }
+</script>
 
 
 <?php
