@@ -17,12 +17,12 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
 
     if ($type == 'delete') {
         $id = get_safe_value($con, $_GET['id']);
-        $delete_sql = "delete from admin_users where id='$id'";
+        $delete_sql = "delete from results where id='$id'";
         mysqli_query($con, $delete_sql);
     }
 }
 
-$sql = "select * from admin_users where role=1 order by id desc";
+$sql = "select * from results order by id desc";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -49,34 +49,39 @@ $res = mysqli_query($con, $sql);
                                 <thead>
                                     <tr>
                                         <th class="serial">#</th>
-                                        <th width="2%">ID</th>
-                                        <th width="20%">Username</th>
-                                        <th width="20%">Password</th>
-                                        <th width="20%">Email</th>
-                                        <th width="10%">Mobile</th>
+                                        <th width="15%">Date</th>
+                                        <th width="10%">Time</th>
+                                        <th width="15%">Home Team</th>
+                                        <th width="15%">HomeTeam Result </th>
+                                        <th width="15%">AwayTeam Result </th>
+                                        <th width="15%">Away Team</th>
                                         <th width="26%"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $i = 1;
-                                    while ($row = mysqli_fetch_assoc($res)) { ?>
+                                    $i = 0;
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        $fixture = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `fixtures` where id='{$row['fixture_id']}' "));
+                                        $homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$fixture['home_team']}' "));
+                                        $awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$fixture['away_team']}' "));
+                                        $i++;
+                                    ?>
                                         <tr>
                                             <td class="serial"><?php echo $i ?></td>
-                                            <td><?php echo $row['id'] ?></td>
-                                            <td><?php echo $row['username'] ?></td>
-                                            <td><?php echo $row['password'] ?></td>
-                                            <td><?php echo $row['email'] ?></td>
-                                            <td><?php echo $row['mobile'] ?></td>
+                                            <td><?php echo $fixture['date'] ?></td>
+                                            <td><?php echo $fixture['time'] ?></td>
+                                            <td><?php echo $homeTeam[0] ?></td>
+                                            <td><?php echo $row['home_team_result'] ?></td>
+                                            <td><?php echo $row['away_team_result'] ?></td>
+                                            <td><?php echo $awayTeam[0] ?></td>
+
+
 
                                             <td>
                                                 <?php
-                                                if ($row['status'] == 1) {
-                                                    echo "<span class='badge badge-complete'><a href='?type=status&operation=deactive&id=" . $row['id'] . "'>Active</a></span>&nbsp;";
-                                                } else {
-                                                    echo "<span class='badge badge-pending'><a href='?type=status&operation=active&id=" . $row['id'] . "'>Deactive</a></span>&nbsp;";
-                                                }
-                                                echo "<span class='badge badge-edit'><a href='manage_vendor_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
+
+                                                echo "<span class='badge badge-edit'><a href='manage_results_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
 
                                                 echo "<span class='badge badge-delete'><a href='?type=delete&id=" . $row['id'] . "'>Delete</a></span>";
 

@@ -25,8 +25,10 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-   <script src="assets/js/bootstrap.js"></script>
-   <script src="/"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -70,9 +72,8 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
       <header id="header" class="header">
          <div class="top-left">
             <div class="navbar-header">
-               <a class="navbar-brand" href="index.php"><img src="images/MyLogo.png" alt="Logo"></a>
-               <a class="navbar-brand hidden" href="index.php"><img src="images/MyLogo.png" alt="Logo"></a>
-               <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+               <a class="navbar-brand" href="index.php">Admin Panel</a>
+               <br>
             </div>
          </div>
          <div class="top-right">

@@ -41,21 +41,23 @@ $res = mysqli_query($con, $sql);
 										<th>ID</th>
 										<th>Date</th>
 										<th>Time</th>
-										<th>competition</th>
+										<th width="5%">competition</th>
 										<th>Home</th>
 										<th>Away</th>
-										<th>Location</th>
-										<th>Desrciption</th>
+										<th width="5%">Location</th>
+										<th width="20%">Desrciption</th>
 										<th>Actions</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-									$i = 1;
+									$i = 0;
 									while ($row = mysqli_fetch_assoc($res)) {
 										$homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}'"));
 
 										$awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}'"));
+										$i++;
 									?>
 										<tr>
 											<td class="serial"><?php echo $i ?></td>
@@ -70,11 +72,7 @@ $res = mysqli_query($con, $sql);
 
 											<td>
 												<?php
-												if ($row['status'] == 1) {
-													echo "<span class='badge badge-complete'><a href='?type=status&operation=deactive&id=" . $row['id'] . "'>Active</a></span>&nbsp;";
-												} else {
-													echo "<span class='badge badge-pending'><a href='?type=status&operation=active&id=" . $row['id'] . "'>Deactive</a></span>&nbsp;";
-												}
+
 												echo "<span class='badge badge-edit'><a href='manage_fixtures_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
 
 												echo "<span class='badge badge-delete'><a href='?type=delete&id=" . $row['id'] . "'>Delete</a></span>";
