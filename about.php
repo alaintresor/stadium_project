@@ -1,7 +1,7 @@
 
 <?php include('header.php');
-	$qry2=mysqli_query($con,"select * from tbl_concert where concert_id='".$_GET['id']."'");
-	$concert=mysqli_fetch_array($qry2);
+	$qry2=mysqli_query($con,"select * from fixtures where id='".$_GET['id']."'");
+	$fix=mysqli_fetch_array($qry2);
 	?>
 	    <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -12,60 +12,36 @@
 		<div class="content-top">
 				<div class="section group">
 					<div class="about span_1_of_2">	
-						<h3><?php echo $concert['concert_name']; ?></h3>	
+						<h3><?php 
+							$sel1=$con->query("SELECT name,logo FROM teams WHERE id='".$fix['home_team']."'");
+							$sel2=$con->query("SELECT name,logo FROM teams WHERE id='".$fix['away_team']."'");
+							$res=mysqli_fetch_array($sel1);
+							$res1=mysqli_fetch_array($sel2);
+						echo $res[0]." Vs ".$res1[0]; ?></h3>	
 							<div class="about-top">	
 								<div class="grid images_3_of_2">
-									<img src="<?php echo $concert['image']; ?>" alt=""/>
+									<img src="<?php echo $fix['cover_image']; ?>" alt="no image"/>
 								</div>
 								<div class="desc span_3_of_2">
-									<p class="p-link" style="font-size:15px">Members : <?php echo $concert['cast']; ?></p>
-									<p class="p-link" style="font-size:15px">Latest CD : <?php echo date('d-M-Y',strtotime($concert['release_date'])); ?></p>
-									<p style="font-size:15px"><?php echo $concert['desc']; ?></p>
-									<a href="<?php echo $concert['video_url']; ?>" target="_blank" class="watch_but">Check</a>
+									<p class="p-link" style="font-size:15px">Location: <?php echo $fix['location']; ?></p>
+							<p class="p-link" style="font-size:15px">Date: <?php echo date('d-M-Y',strtotime($fix['date'])); ?> Time:<?php echo $fix['time'] ?></p>
+									<p class="p-link" style="font-size:15px">Description: <?php echo $fix['description']; ?></p>
+									<p class="p-link" style="font-size:15px">Competition: <?php echo $fix['competition']; ?></p>
+									<p class="p-link" style="font-size:15px">Date: <?php echo date('d-M-Y',strtotime($fix['date'])); ?></p>
+									<p class="p-link" style="font-size:15px">
+									<a href="booking.php?id=<?php echo $_GET['id'] ?>"><button class='btn btn-primary'>Book Now</button></a>
+									</p>
+								
+									
 								</div>
 								<div class="clear"></div>
 							</div>
-							<?php $s=mysqli_query($con,"select DISTINCT stadium_id from tbl_shows where concert_id='".$concert['concert_id']."'");
-							if(mysqli_num_rows($s))
-							{?>
-							<table class="table table-hover table-bordered text-center">
-							<?php
-								while($shw=mysqli_fetch_array($s))
-								{
-									$t=mysqli_query($con,"select * from tbl_stadium where id='".$shw['stadium_id']."'");
-									$theatre=mysqli_fetch_array($t);
-									?>
-									<tr>
-										<td>
-											<?php echo $theatre['name'].", ".$theatre['place'];?>
-										</td>
-										<td>
-											<?php $tr=mysqli_query($con,"select * from tbl_shows where concert_id='".$concert['concert_id']."' and stadium_id='".$shw['stadium_id']."'");
-											while($shh=mysqli_fetch_array($tr))
-											{
-												$ttm=mysqli_query($con,"select  * from tbl_show_time where st_id='".$shh['st_id']."'");
-												$ttme=mysqli_fetch_array($ttm);
-												
-												?>
-												<a href="check_login.php?show=<?php echo $shh['s_id'];?>&concert=<?php echo $shh['concert_id'];?>&stadium=<?php echo $shw['stadium_id'];?>"><button class="btn btn-default"><?php echo date('h:i A',strtotime($ttme['start_time']));?></button></a>
-												<?php
-											}
-											?>
+						
 										</td>
 									</tr>
-									<?php
-								}
-							?>
+						
 						</table>
-							<?php
-							}						
-							else
-							{
-								?>
-								<h3>No Show Available</h3>
-								<?php
-							}
-							?>
+						
 			    </div>	
              <?php include('fixtures_sidebar.php');?>
 		  </div>			

@@ -4,7 +4,7 @@ if(!isset($_SESSION['user']))
 {
 	header('location:login.php');
 }
-	$qry2=mysqli_query($con,"select * from tbl_concert where concert_id='".$_GET['id']."'");
+	$qry2=mysqli_query($con,"select * from fixtures where id='".$_GET['id']."'");
 	$concert=mysqli_fetch_array($qry2);
 	?>
 <div class="content">
@@ -12,7 +12,7 @@ if(!isset($_SESSION['user']))
 		<div class="content-top">
 				<div class="section group">
 					<div class="about span_1_of_2">	
-						<h3><?php echo $concert['concert_name']; ?></h3>	
+						<h3><?php echo $concert['name']; ?></h3>	
 							<div class="about-top">	
 								<div class="grid images_3_of_2">
 									<img src="<?php echo $concert['image']; ?>" alt=""/>
