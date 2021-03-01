@@ -1,7 +1,9 @@
 
 <?php include('header.php');
 	$qry2=mysqli_query($con,"select * from fixtures where id='".$_GET['id']."'");
+	$qry3=mysqli_query($con,"select * from seats_and_prices where fixture_id='".$_GET['id']."'");
 	$fix=mysqli_fetch_array($qry2);
+	$seat=mysqli_fetch_array($qry3);
 	?>
 	    <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -27,7 +29,12 @@
 							<p class="p-link" style="font-size:15px">Date: <?php echo date('d-M-Y',strtotime($fix['date'])); ?> Time:<?php echo $fix['time'] ?></p>
 									<p class="p-link" style="font-size:15px">Description: <?php echo $fix['description']; ?></p>
 									<p class="p-link" style="font-size:15px">Competition: <?php echo $fix['competition']; ?></p>
-									<p class="p-link" style="font-size:15px">Date: <?php echo date('d-M-Y',strtotime($fix['date'])); ?></p>
+									<p class="p-link" style="font-size:15px">
+									Seats:<ul><li> VVIP SEATS: No:<?php echo $seat[1]; ?>, Price:<?php echo $seat[2]; ?></li>
+									<li>VIP SEATS: No: <?php echo $seat[3]; ?> ,
+									Price:<?php echo $seat[4]; ?></li>
+									<li>Roofed SEATS: No:<?php echo $seat[5]; ?>,
+									 Price:<?php echo $seat[6]; ?></li><li>UnRoofed SEATS: No:<?php echo $seat[7]; ?> ,Price:<?php echo $seat[8]; ?></li> </p>
 									<p class="p-link" style="font-size:15px">
 									<a href="booking.php?id=<?php echo $_GET['id'] ?>"><button class='btn btn-primary'>Book Now</button></a>
 									</p>

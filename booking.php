@@ -5,78 +5,69 @@ if(!isset($_SESSION['user']))
 	header('location:login.php');
 }
 	$qry2=mysqli_query($con,"select * from fixtures where id='".$_GET['id']."'");
-	$concert=mysqli_fetch_array($qry2);
+	$fix=mysqli_fetch_array($qry2);
 	?>
 <div class="content">
 	<div class="wrap">
 		<div class="content-top">
 				<div class="section group">
 					<div class="about span_1_of_2">	
-						<h3><?php echo $concert['name']; ?></h3>	
+					<h3><center><?php 
+							$sel1=$con->query("SELECT name,logo FROM teams WHERE id='".$fix['home_team']."'");
+							$sel2=$con->query("SELECT name,logo FROM teams WHERE id='".$fix['away_team']."'");
+							$res=mysqli_fetch_array($sel1);
+							$res1=mysqli_fetch_array($sel2);
+						echo "You are about to book ".$res[0]." Vs ".$res1[0]; ?></center></h3>	
 							<div class="about-top">	
 								<div class="grid images_3_of_2">
-									<img src="<?php echo $concert['image']; ?>" alt=""/>
+									<img src="<?php echo $fix['cover_image']; ?>" alt=""/>
 								</div>
 								<div class="desc span_3_of_2">
-									<p class="p-link" style="font-size:15px">Members : <?php echo $concert['cast']; ?></p>
-									<p class="p-link" style="font-size:15px">Latest CD : <?php echo date('d-M-Y',strtotime($concert['release_date'])); ?></p>
-									<p style="font-size:15px"><?php echo $concert['desc']; ?></p>
+									
 								</div>
 								<div class="clear"></div>
 							</div>
 							<table class="table table-hover table-bordered text-center">
 							<?php
-								$s=mysqli_query($con,"select * from tbl_shows where s_id='".$_GET['id']."'");
-								$shw=mysqli_fetch_array($s);
+								// $s=mysqli_query($con,"select * from tbl_shows where s_id='".$_GET['id']."'");
+								// $shw=mysqli_fetch_array($s);
 								
-									$t=mysqli_query($con,"select * from tbl_stadium where id='".$shw['stadium_id']."'");
-									$stadium=mysqli_fetch_array($t);
+								// 	$t=mysqli_query($con,"select * from tbl_stadium where id='".$shw['stadium_id']."'");
+								// 	$stadium=mysqli_fetch_array($t);
 									?>
 									<tr>
 										<td class="col-md-6">
 											Stadium
 										</td>
-										<td>
-											<?php echo $stadium['name'].", ".$stadium['place'];?>
+										<td class="col-md-6">
+											<?php echo $fix['location'] ?>
 										</td>
+									
 										</tr>
-										<tr>
-											<td>
-												Tier
-											</td>
-										<td>
-											<?php 
-												$ttm=mysqli_query($con,"select  * from tbl_show_time where st_id='".$shw['st_id']."'");
-												$ttme=mysqli_fetch_array($ttm);
-												$sn=mysqli_query($con,"select  * from tbl_screens where screen_id='".$ttme['screen_id']."'");
-												$screen=mysqli_fetch_array($sn);
-												echo $screen['screen_name'];
-												?>
-										</td>
-									</tr>
+									
 									<tr>
 										<td>
 											Date
 										</td>
-										<td>				
-							<div class="col-md-12 text-center" style="padding-bottom:20px">
-							<?php 
-									$date=$ttme['date_show'];
-                              $_SESSION['dd']=$date;
-							echo date('Y-m-d',strtotime($ttme['date_show']));
-								$av=mysqli_query($con,"select sum(no_seats) from tbl_bookings where show_id='".$_SESSION['show']."' and ticket_date='$date'");
-								$avl=mysqli_fetch_array($av);
-								?>
-							</div>
+										<td class="col-md-6">
+											<?php echo $fix['date'] ?>
 										</td>
+									
 									</tr>
 									<tr>
-										<td>
-											Show Time
-										</td>
-										<td>
-											<?php echo date('h:i A',strtotime($ttme['start_time']));?> 
-										</td>
+									<td>
+										Seats
+										</td>	
+									<td><select class="form-control" onchange="getSeat();"  id="category" >
+											<option selected="" disabled="">Choose Seat</option>
+											<option value='vvip' >VVIP</option>
+											<option  >VIP</option>
+											<option  >Roofed</option>
+											<option >UnRoofed</option>
+
+											</select>
+											 <b id="seats1">23</b>
+											</td>
 									</tr>
 									<tr>
 										<td>
@@ -84,10 +75,11 @@ if(!isset($_SESSION['user']))
 										</td>
 										<td>
 											<form  action="process_booking.php" method="post">
-											<input type="hidden" name="screen" value="<?php echo $screen['screen_id'];?>"/>
-											<input type="number" required tile="Number of Seats" max="<?php echo $screen['seats']-$avl[0];?>" min="0" name="seats" class="form-control" value="1" style="text-align:center" id="seats"/>
-											<input type="hidden" name="amount" id="hm" value="<?php echo $screen['charge'];?>"/>
-											<input type="hidden" name="date" value="<?php echo $date;?>"/>
+											<input type="hidden" name="screen" value="<?php //echo $screen['screen_id'];?>"/>
+											<input type="number" required tile="Number of Seats" max="<?php //echo $screen['seats']-$avl[0];?>" min="0" name="seats" class="form-control" value="1" style="text-align:center" id="seats"/>
+											
+											<input type="hidden" name="amount" id="hm" value="<?php //echo $screen['charge'];?>"/>
+											<input type="hidden" name="date" value="<?php //echo $date;?>"/>
 										</td>
 									</tr>
 									<tr>
@@ -95,13 +87,13 @@ if(!isset($_SESSION['user']))
 											Amount
 										</td>
 										<td id="amount" style="font-weight:bold;font-size:18px">
-											€ <?php echo $screen['charge'];?>
+											€ <?php// echo $screen['charge'];?>
 										</td>
 									</tr>
 									<tr>
-										<td colspan="2"><?php if($avl[0]==$screen['seats']){?><button type="button" class="btn btn-danger" style="width:100%">House Full</button><?php } else { ?>
+										<td colspan="2"><?php //if($avl[0]==$screen['seats']){?><button type="button" class="btn btn-danger" style="width:100%">House Full</button><?php// } else { ?>
 										<button class="btn btn-info" style="width:100%">Book Now</button>
-										<?php } ?>
+										<?php //} ?>
 										</form></td>
 									</tr>
 						<table>
@@ -118,10 +110,28 @@ if(!isset($_SESSION['user']))
 </div>
 <?php include('footer.php');?>
 <script type="text/javascript">
-	$('#seats').change(function(){
-		var charge=<?php echo $screen['charge'];?>;
-		amount=charge*$(this).val();
-		$('#amount').html("€ "+amount);
-		$('#hm').val(amount);
-	});
+ //get seats according to category
+ const getSeat = () => {
+        let item = $("#category").val();
+
+        $.ajax({
+          url: "getSeat.php",
+          type: "POST",
+          data: {
+            item
+          },
+          success: function(data) {
+
+            $("#seats1").html(data);
+            console.log(data);
+          }
+
+        })
+
+	// $('#seats').change(function(){
+	// 	var charge=<?php echo $screen['charge'];?>;
+	// 	amount=charge*$(this).val();
+	// 	$('#amount').html("€ "+amount);
+	// 	$('#hm').val(amount);
+	// });
 </script>
