@@ -7,22 +7,16 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
 		$operation = get_safe_value($con, $_GET['operation']);
 		$id = get_safe_value($con, $_GET['id']);
 		if ($operation == 'active') {
-			$status = '1';
+			$status = 'active';
 		} else {
-			$status = '0';
+			$status = 'deactive';
 		}
-		$update_status_sql = "update coupon_master set status='$status' where id='$id'";
+		$update_status_sql = "update fixtures set status='$status' where id='$id'";
 		mysqli_query($con, $update_status_sql);
-	}
-
-	if ($type == 'delete') {
-		$id = get_safe_value($con, $_GET['id']);
-		$delete_sql = "delete from coupon_master where id='$id'";
-		mysqli_query($con, $delete_sql);
 	}
 }
 
-$sql = "select * from coupon_master order by id desc";
+$sql = "select * from fixtures";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -39,34 +33,45 @@ $res = mysqli_query($con, $sql);
 								<thead>
 									<tr>
 										<th class="serial">#</th>
-										<th width="2%">ID</th>
-										<th width="20%">Coupon Code</th>
-										<th width="20%">Coupon Value</th>
-										<th width="20%">Coupon Type</th>
-										<th width="10%">Min Value</th>
-										<th width="26%"></th>
+										<th>ID</th>
+										<th>Date</th>
+										<th>Time</th>
+										<th width="5%">competition</th>
+										<th>Home</th>
+										<th>Away</th>
+										<th width="5%">Location</th>
+										<th width="20%">Desrciption</th>
+										<th>Actions</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-									$i = 1;
-									while ($row = mysqli_fetch_assoc($res)) { ?>
+									$i = 0;
+									while ($row = mysqli_fetch_assoc($res)) {
+										$homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}'"));
+
+										$awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}'"));
+										$i++;
+									?>
 										<tr>
 											<td class="serial"><?php echo $i ?></td>
 											<td><?php echo $row['id'] ?></td>
-											<td><?php echo $row['coupon_code'] ?></td>
-											<td><?php echo $row['coupon_value'] ?></td>
-											<td><?php echo $row['coupon_type'] ?></td>
-											<td><?php echo $row['cart_min_value'] ?></td>
+											<td><?php echo $row['date'] ?></td>
+											<td><?php echo $row['time'] ?></td>
+											<td><?php echo $row['competition'] ?></td>
+											<td><?php echo $homeTeam[0] ?></td>
+											<td><?php echo $awayTeam[0] ?></td>
+											<td><?php echo $row['location'] ?></td>
+											<td><?php echo $row['description'] ?></td>
 
 											<td>
 												<?php
-												if ($row['status'] == 1) {
+												if ($row['status'] == 'active') {
 													echo "<span class='badge badge-complete'><a href='?type=status&operation=deactive&id=" . $row['id'] . "'>Active</a></span>&nbsp;";
 												} else {
 													echo "<span class='badge badge-pending'><a href='?type=status&operation=active&id=" . $row['id'] . "'>Deactive</a></span>&nbsp;";
 												}
-
 												?>
 											</td>
 										</tr>

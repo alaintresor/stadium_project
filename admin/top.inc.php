@@ -37,6 +37,9 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
          <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                <li class="menu-title">MENU</li>
+               <li class="menu-item-has-children dropdown">
+                  <a href="index.php"> DASHBOARD </a>
+               </li>
                <?php if ($_SESSION['ADMIN_ROLE'] == 0) { ?>
                   <li class="menu-item-has-children dropdown">
                      <a href="teams_management.php"> TEAMS </a>
@@ -51,7 +54,7 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                      <a href="postpone_management.php"> POSTPONE A MATCH </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
-                     <a href="contact_us.php"> REPORT</a>
+                     <a href="football_agent_reports.php"> REPORT</a>
                   </li>
                <?php } else if ($_SESSION['ADMIN_ROLE'] == 1) { ?>
                   <li class="menu-item-has-children dropdown">
@@ -61,7 +64,7 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                      <a href="seats_management.php">PRICE & SEAT </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
-                     <a href="postpone_management.php"> REPORT </a>
+                     <a href="manger_reports.php"> REPORT </a>
                   </li>
                <?php } ?>
             </ul>

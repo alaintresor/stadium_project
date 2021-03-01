@@ -3,26 +3,14 @@ require('top.inc.php');
 isManger();
 if (isset($_GET['type']) && $_GET['type'] != '') {
     $type = get_safe_value($con, $_GET['type']);
-    if ($type == 'status') {
-        $operation = get_safe_value($con, $_GET['operation']);
-        $id = get_safe_value($con, $_GET['id']);
-        if ($operation == 'active') {
-            $status = '1';
-        } else {
-            $status = '0';
-        }
-        $update_status_sql = "update admin_users set status='$status' where id='$id'";
-        mysqli_query($con, $update_status_sql);
-    }
-
     if ($type == 'delete') {
         $id = get_safe_value($con, $_GET['id']);
-        $delete_sql = "delete from admin_users where id='$id'";
+        $delete_sql = "delete from seats_and_prices where id='$id'";
         mysqli_query($con, $delete_sql);
     }
 }
 
-$sql = "select * from admin_users where role=1 order by id desc";
+$sql = "SELECT * FROM `seats_and_prices` order by id desc";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -49,12 +37,16 @@ $res = mysqli_query($con, $sql);
                                 <thead>
                                     <tr>
                                         <th class="serial">#</th>
-                                        <th width="2%">ID</th>
-                                        <th width="20%">Username</th>
-                                        <th width="20%">Password</th>
-                                        <th width="20%">Email</th>
-                                        <th width="10%">Mobile</th>
-                                        <th width="26%"></th>
+                                        <th>Fixture ID</th>
+                                        <th>VVIP Seats</th>
+                                        <th>VVIP Price</th>
+                                        <th>VIP Seats</th>
+                                        <th>VIP Price</th>
+                                        <th>Roofed Seats</th>
+                                        <th>Roofed Price</th>
+                                        <th width="5%">Unroofed Seats</th>
+                                        <th>Unoofed Price</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -63,19 +55,18 @@ $res = mysqli_query($con, $sql);
                                     while ($row = mysqli_fetch_assoc($res)) { ?>
                                         <tr>
                                             <td class="serial"><?php echo $i ?></td>
-                                            <td><?php echo $row['id'] ?></td>
-                                            <td><?php echo $row['username'] ?></td>
-                                            <td><?php echo $row['password'] ?></td>
-                                            <td><?php echo $row['email'] ?></td>
-                                            <td><?php echo $row['mobile'] ?></td>
-
+                                            <td><?php echo $row['fixture_id'] ?></td>
+                                            <td><?php echo $row['vvip_seats'] ?></td>
+                                            <td><?php echo $row['vvip_price'] ?></td>
+                                            <td><?php echo $row['vip_seats'] ?></td>
+                                            <td><?php echo $row['vip_price'] ?></td>
+                                            <td><?php echo $row['roofed_seats'] ?></td>
+                                            <td><?php echo $row['roofed_price'] ?></td>
+                                            <td><?php echo $row['unroofed_seats'] ?></td>
+                                            <td><?php echo $row['unroofed_price'] ?></td>
                                             <td>
                                                 <?php
-                                                if ($row['status'] == 1) {
-                                                    echo "<span class='badge badge-complete'><a href='?type=status&operation=deactive&id=" . $row['id'] . "'>Active</a></span>&nbsp;";
-                                                } else {
-                                                    echo "<span class='badge badge-pending'><a href='?type=status&operation=active&id=" . $row['id'] . "'>Deactive</a></span>&nbsp;";
-                                                }
+
                                                 echo "<span class='badge badge-edit'><a href='manage_vendor_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
 
                                                 echo "<span class='badge badge-delete'><a href='?type=delete&id=" . $row['id'] . "'>Delete</a></span>";

@@ -1,16 +1,20 @@
 <div class="clearfix"></div>
 
-         <footer class="site-footer">
-            <div class="footer-inner bg-white">
-               <div class="row">
-                  <div class="col-sm-6">
-                
-				<p><center>  <h5><b>All Right Reserved &copy; 2021 bY REGIS</b></h5></center></p>
-				 
-                  </div>                
-               </div>
-            </div>
-         </footer>
+<footer class="site-footer">
+   <div class="footer-inner bg-white">
+      <div class="row">
+         <div class="col-sm-6">
+
+            <center>
+               <p>
+               <h5 style="margin-left: 4cm;"><b>All Right Reserved &copy; 2021 bY REGIS</b></h5>
+               </p>
+            </center>
+
+         </div>
+      </div>
+   </div>
+</footer>
 
 </div>
 <!-- <script src="assets/js/vendor/jquery-2.1.4.min.js" type="text/javascript"></script> -->
