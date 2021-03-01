@@ -2,6 +2,8 @@
 <?php include('header.php');?>
 <div class="content">
 	<div class="wrap">
+	<center>
+	<h1 style="background:yellow">Smart Stadium Ticket Selling System</h1></center>
 		<div class="content-top">
 			<h3>Fixtures</h3>		
 			<?php

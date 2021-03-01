@@ -6,7 +6,7 @@ extract($_POST);
 <div class="content">
 	<div class="wrap">
 		<div class="content-top">
-			<h3>Concerts</h3>
+			<h3>Fixtures</h3>
 			<?php
           	 $today=date("Y-m-d");
           	 $search=$_POST['searching'];
