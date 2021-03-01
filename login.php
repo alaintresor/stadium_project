@@ -1,6 +1,4 @@
-<!--
-@author: Vasilis Tsakiris
--->
+
 <?php include('header.php');?>
 </div>
 <div class="content">
@@ -14,7 +12,7 @@
 				<p class="login-box-msg">Sign in to start your session</p>
 				<form action="process_login.php" method="post">
       <div class="form-group has-feedback">
-        <input name="Email" type="text" size="25" placeholder="Email" class="form-control" placeholder="Email"/>
+        <input name="Email" type="text" placeholder="Email" class="form-control" placeholder="Email"/>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

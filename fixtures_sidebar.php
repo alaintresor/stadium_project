@@ -3,7 +3,24 @@
 					<h3>Live match(es)</h3>	
 					<?php
           	 $today=date("Y-m-d");
-          	$qry2=mysqli_query($con,"select * from  tbl_concert where status='0' order by rand() limit 3");
+          	$qry2=mysqli_query($con,"select * from  fixtures where status='0' order by rand() limit 3");
+			  if(mysqli_num_rows($qry2)<=0){ ?>
+
+				<div class="content-left">
+				<div class="listimg listimg_1_of_2">
+					
+				</div>
+				<div class="text list_1_of_2">
+					  <div class="extra-wrap">
+						  <span style="text-color:#000" class="data"><strong><?php ?></strong><br>
+						  <span style="text-color:#000" class="data"><strong>no Match To show<?php ?></strong><br>
+							<!-- <div class="data">Ended<?php ?></div>          
+							<span class="text-top">Stadium: Huye Stadium</span> -->
+					  </div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			 <?php } else{
 
           	  while($m=mysqli_fetch_array($qry2))
                    {
@@ -24,7 +41,7 @@
 				</div>
 					
   	    <?php
-  	    	}
+  	    	} }
   	    	?>
 					
 					

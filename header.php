@@ -23,9 +23,10 @@ session_start();
                        <li ><a href="index.php">Home</a></li>
                        <li ><a href="fixtures_events.php"> All Fixtures</a></li>
                      
-                        <li ><?php if(isset($_SESSION['user'])){
-                       $us=mysqli_query($con,"select * from tbl_registration where user_id='".$_SESSION['user']."'");
-        $user=mysqli_fetch_array($us);?><a href="profile.php"><?php echo $user['name'];?></a></li><li><a href="logout.php">Logout</a></li?<?php }else{?><a href="login.php">Login</a><?php }?></li>
+                       <?php if(isset($_SESSION['user'])){
+                       $us=mysqli_query($con,"select * from customers where id='".$_SESSION['user']."'");
+        $user=mysqli_fetch_array($us);?> <li ><a href="profile.php"><?php echo $user['fullname'];?></a></li>
+        <li><a href="logout.php">Logout</a></li?<?php }else{?><a href="login.php">Login</a><?php }?></li>
                     </ul>	  
 			  </div>
  			<div class="clear"></div>

@@ -1,20 +1,20 @@
-<!--
-@author: Vasilis Tsakiris
--->
+
 <?php
 include('config.php');
 session_start();
 $email = $_POST["Email"];
 $pass = $_POST["Password"];
-$attempt=2;
-$qry=mysqli_query($con,"select * from tbl_login where username='$email' and password='$pass' and user_type<3 ");
-$qry2=mysqli_query($con,"select * from tbl_login where username='$email' and user_type < 3 ");
+//$attempt=2;
+$qry=mysqli_query($con,"select * from customers where email='$email' and password='$pass' ");
+//$qry2=mysqli_query($con,"select * from customers where email='$email'");
 
-if(mysqli_num_rows($qry))
+if(mysqli_num_rows($qry)>0)
 {
 	$usr=mysqli_fetch_array($qry);
 
-		$_SESSION['user']=$usr['user_id'];
+		$_SESSION['user']=$usr['id'];
+		$_SESSION['email']=$email;
+		//$_SESSION['id']=$res[0];
 		if(isset($_SESSION['show']))
 		{
 			header('location:booking.php');
@@ -25,30 +25,30 @@ if(mysqli_num_rows($qry))
 		}
 	}
 
-else if(mysqli_num_rows($qry2)){
+// else if(mysqli_num_rows($qry2)){
 
    
-        $qryupdt=mysqli_query($con,"update tbl_login set user_type=user_type + 1 where username='$email' ");
-        $_SESSION['error']="Login Failed!";
-             $attempt--;
-		header("location:login.php");
+//         $qryupdt=mysqli_query($con,"update customers set user_type=user_type + 1 where username='$email' ");
+//         $_SESSION['error']="Login Failed!";
+//              $attempt--;
+// 		header("location:login.php");
         
 
 
-}
-else if(!mysqli_num_rows($qry2))
-{
+// }
+// else if(!mysqli_num_rows($qry2))
+// {
 
-         $_SESSION['error']="Login Failed!Your account has been blocked.";
-		header("location:login.php");
+//          $_SESSION['error']="Login Failed!Your account has been blocked.";
+// 		header("location:login.php");
 
-}
+// }
 
 
 else
 {
-
-	$_SESSION['error']="Login Failed!";
+//echo "trr".mysqli_error($con);
+	$_SESSION['error']="Login Failed!".mysqli_error($con);
 	header("location:login.php");
 }
 ?>

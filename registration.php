@@ -1,6 +1,4 @@
-<!--
-@author: Vasilis Tsakiris
--->
+
 <?php include('header.php');?>
 <link rel="stylesheet" href="validation/dist/css/bootstrapValidator.css"/>
   <!-- =============================================== -->
@@ -39,7 +37,7 @@
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input name="phone" type="text" size="25" placeholder="Mobile Number" class="form-control"/>
+        <input name="phone" type="text" size="25" max-length="10" placeholder="Mobile Number" class="form-control"/>
         <?php $frm->validate("phone",array("required","label"=>"Mobile Number","regexp"=>"mobile")); // Validating form using form builder written in form.php ?>
         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
       </div>
@@ -59,7 +57,8 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group">
-          <button type="submit" class="btn btn-primary">Login</button>
+          <button type="submit" class="btn btn-primary">Register</button>
+           <a href="login.php" class="btn btn-primary">Login</a>
       </div>
       </div>
 </div>
