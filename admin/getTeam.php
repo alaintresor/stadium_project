@@ -7,10 +7,12 @@ if ($team == 1) {
     $query = "select home_team from fixtures where id='$id'";
     $data = mysqli_query($con, "$query");
     $team = mysqli_fetch_array($data);
-    echo $team[0];
 } else {
     $query = "select away_team from fixtures where id='$id'";
     $data = mysqli_query($con, "$query");
     $team = mysqli_fetch_array($data);
-    echo $team[0];
 }
+$query2 = "select name from teams where id='$team[0]'";
+$data2 = mysqli_query($con, "$query2");
+$teamName = mysqli_fetch_array($data2);
+echo $teamName[0];

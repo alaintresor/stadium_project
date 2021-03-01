@@ -1,58 +1,43 @@
 <?php
 require('top.inc.php');
 isAdmin();
-$username = '';
-$password = '';
-$email = '';
-$mobile = '';
+$fixtureId = '';
+$reason = '';
+$movedOn = '';
+$movedAt = '';
 
 $msg = '';
 if (isset($_GET['id']) && $_GET['id'] != '') {
     $image_required = '';
     $id = get_safe_value($con, $_GET['id']);
-    $res = mysqli_query($con, "select * from admin_users where id='$id'");
+    $res = mysqli_query($con, "SELECT * FROM `postponed_matchs` where id='$id'");
     $check = mysqli_num_rows($res);
     if ($check > 0) {
         $row = mysqli_fetch_assoc($res);
-        $username = $row['username'];
-        $email = $row['email'];
-        $mobile = $row['mobile'];
-        $password = $row['password'];
+        $fixtureId = $row['fixture_id'];
+        $movedON = $row['moved_date'];
+        $movedAt = $row['moved_time'];
+        $reason = $row['reason'];
     } else {
-        header('location:vendor_management.php');
+        header('location:postpone_management.php');
         die();
     }
 }
 
 if (isset($_POST['submit'])) {
-    $username = get_safe_value($con, $_POST['username']);
-    $email = get_safe_value($con, $_POST['email']);
-    $mobile = get_safe_value($con, $_POST['mobile']);
-    $password = get_safe_value($con, $_POST['password']);
-
-    $res = mysqli_query($con, "select * from admin_users where username='$username'");
-    $check = mysqli_num_rows($res);
-    if ($check > 0) {
-        if (isset($_GET['id']) && $_GET['id'] != '') {
-            $getData = mysqli_fetch_assoc($res);
-            if ($id == $getData['id']) {
-            } else {
-                $msg = "Username already exist";
-            }
-        } else {
-            $msg = "Username already exist";
-        }
-    }
-
+    $fixtureId = get_safe_value($con, $_POST['fixtureId']);
+    $reason = get_safe_value($con, $_POST['reason']);
+    $movedOn = get_safe_value($con, $_POST['movedOn']);
+    $movedAt = get_safe_value($con, $_POST['movedAt']);
 
     if ($msg == '') {
         if (isset($_GET['id']) && $_GET['id'] != '') {
-            $update_sql = "update admin_users set username='$username',password='$password',email='$email',mobile='$mobile' where id='$id'";
+            $update_sql = "update postponed_matchs set fixture_id='$fixtureId',reason='$reason',moved_date='$movedOn',moved_time='$movedAt' where id='$id'";
             mysqli_query($con, $update_sql);
         } else {
-            mysqli_query($con, "insert into admin_users(username,password,email,mobile,role,status) values('$username','$password','$email','$mobile',1,1)");
+            mysqli_query($con, "INSERT INTO `postponed_matchs` (`id`, `fixture_id`, `reason`, `moved_date`, `moved_time`) VALUES (NULL, '$fixtureId', '$reason', '$movedOn', '$movedAt')");
         }
-        header('location:vendor_management.php');
+        header('location:postpone_management.php');
         die();
     }
 }
@@ -67,17 +52,17 @@ if (isset($_POST['submit'])) {
                         <div class="card-body card-block">
 
                             <div class="form-group">
-                                <label for="date" class=" form-control-label">Fexture Id</label>
-                                <input type="text" name="name" class="form-control" required value="<?php echo $username ?>">
+                                <label for="date" class=" form-control-label">Fixture Id</label>
+                                <input type="text" name="fixtureId" onchange="selectTeams()" id="fixture" class="form-control" required value="<?php echo $fixtureId ?>">
                             </div>
-                            <div>
-                                mukura VS Kiyovu
+                            <div id="show" style="display:none">
+                                <span id="home"></span> VS <span id="away"></span>
                             </div>
                             <br>
                             <div class="form-group">
-                                <label for="date" class=" form-control-label">Reasion:</label>
-                                <textarea class="form-control" required value="<?php echo $username ?>">
-                                Describle reasion couse match to be postponed
+                                <label for="date" class=" form-control-label">Reason:</label>
+                                <textarea class="form-control" required name="reason" placeholder="Describle reason couse match to be postponed">
+                                <?php echo $reason ?>
                                 </textarea>
                             </div>
                             <b>Match moved</b>
@@ -85,13 +70,13 @@ if (isset($_POST['submit'])) {
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="time" class=" form-control-label">ON</label>
-                                        <input type="date" name="homeResult" class="form-control" required value="<?php echo $username ?>">
+                                        <input type="date" name="movedOn" class="form-control" required value="<?php echo $movedOn ?>">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="time" class=" form-control-label">AT</label>
-                                        <input type="time" name="homeResult" class="form-control" required value="<?php echo $username ?>">
+                                        <input type="time" name="movedAt" class="form-control" required value="<?php echo $movedAt ?>">
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +95,51 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
+<script>
+    const selectTeams = () => {
+        var show = $("#show").show();
+        var id = $("#fixture").val();
+        const getOne = () => {
 
+            let team = 1;
+            $.ajax({
+                url: "getTeam.php",
+                type: "POST",
+                data: {
+                    id,
+                    team
+                },
+                success: function(data) {
+
+                    $("#home").html(data);
+
+                }
+
+            })
+        }
+
+        const getTwo = () => {
+
+            let team = 2;
+            $.ajax({
+                url: "getTeam.php",
+                type: "POST",
+                data: {
+                    id,
+                    team
+                },
+                success: function(data) {
+
+                    $("#away").html(data);
+
+                }
+
+            })
+        }
+        getOne();
+        getTwo();
+    }
+</script>
 
 
 <?php
