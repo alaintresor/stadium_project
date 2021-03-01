@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2021 at 11:32 PM
+-- Generation Time: Mar 01, 2021 at 09:44 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `stadium_project`
+-- Database: `stadium`
 --
 
 -- --------------------------------------------------------
@@ -34,6 +34,13 @@ CREATE TABLE `admin_users` (
   `password` varchar(200) NOT NULL,
   `role` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `username`, `password`, `role`) VALUES
+(2, 'footballagent', '1234', '0');
 
 -- --------------------------------------------------------
 
@@ -84,6 +91,13 @@ CREATE TABLE `fixtures` (
   `cover_image` varchar(500) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'no'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `fixtures`
+--
+
+INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`, `status`) VALUES
+(2, '2021-03-01', '09:00', 'ikikombe cya mahoro', '1', '2', 'huye stadium', 'this match will make alto of changes on table', '../images/upload/250784170661_status_a8eefbfc28c74820be9c6bb7db21e197.jpg', 'no');
 
 -- --------------------------------------------------------
 
@@ -144,6 +158,15 @@ CREATE TABLE `teams` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `teams`
+--
+
+INSERT INTO `teams` (`id`, `name`, `division`, `logo`) VALUES
+(1, 'APR', 'D1', ''),
+(2, 'mukura', 'D1', '...'),
+(4, 'Amagaju', 'D2', '../images/upload/2.jpg');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -197,7 +220,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `admin_users`
 --
 ALTER TABLE `admin_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `booking_teckets`
@@ -215,7 +238,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `fixtures`
 --
 ALTER TABLE `fixtures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `postponed_matchs`
@@ -233,7 +256,7 @@ ALTER TABLE `results`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
