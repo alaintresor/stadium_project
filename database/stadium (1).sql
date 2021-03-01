@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2021 at 09:44 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Generation Time: Mar 01, 2021 at 10:04 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -56,6 +56,13 @@ CREATE TABLE `booking_teckets` (
   `date` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `booking_teckets`
+--
+
+INSERT INTO `booking_teckets` (`id`, `customer_id`, `fixture_id`, `seat`, `date`) VALUES
+(1, '1', '3', 'vvip', '2021-02-21 08:00:51');
+
 -- --------------------------------------------------------
 
 --
@@ -64,14 +71,20 @@ CREATE TABLE `booking_teckets` (
 
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
-  `firstname` varchar(100) NOT NULL,
-  `lastname` varchar(100) NOT NULL,
+  `fullname` varchar(100) NOT NULL,
   `gender` varchar(5) NOT NULL,
   `age` varchar(5) NOT NULL,
   `telephone` varchar(15) NOT NULL,
-  `email` varchar(20) NOT NULL,
+  `email` varchar(200) NOT NULL,
   `password` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `fullname`, `gender`, `age`, `telephone`, `email`, `password`) VALUES
+(1, 'Jean de Dieu', 'Male', '30', '0780640237', 'renzahoemmanuel8@gmail.com', '1234567');
 
 -- --------------------------------------------------------
 
@@ -97,7 +110,8 @@ CREATE TABLE `fixtures` (
 --
 
 INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`, `status`) VALUES
-(2, '2021-03-01', '09:00', 'ikikombe cya mahoro', '1', '2', 'huye stadium', 'this match will make alto of changes on table', '../images/upload/250784170661_status_a8eefbfc28c74820be9c6bb7db21e197.jpg', 'no');
+(2, '2021-03-01', '09:00', 'ikikombe cya mahoro', '1', '2', 'huye stadium', 'this match will make alto of changes on table', '../images/upload/250784170661_status_a8eefbfc28c74820be9c6bb7db21e197.jpg', 'no'),
+(3, '2021-03-01', '16:00', 'peace cup', '2', '4', 'kigali nation stadium', 'djhjhfjdf', '../images/upload/IMG_3122.JPG', 'no');
 
 -- --------------------------------------------------------
 
@@ -126,6 +140,13 @@ CREATE TABLE `results` (
   `away_team_result` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `results`
+--
+
+INSERT INTO `results` (`id`, `fixture_id`, `home_tem_result`, `away_team_result`) VALUES
+(1, '3', '2', '4');
+
 -- --------------------------------------------------------
 
 --
@@ -143,6 +164,13 @@ CREATE TABLE `seats_and_prices` (
   `unroofed_seats` varchar(20) NOT NULL,
   `unroofed_price` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `seats_and_prices`
+--
+
+INSERT INTO `seats_and_prices` (`fixture_id`, `vvip_seats`, `vvip_price`, `vip_seats`, `vip_price`, `roofed_seats`, `roofed_price`, `unroofed_seats`, `unroofed_price`) VALUES
+('3', '2', '10000', '2', '5000', '2', '2000', '2', '1000');
 
 -- --------------------------------------------------------
 
@@ -226,19 +254,19 @@ ALTER TABLE `admin_users`
 -- AUTO_INCREMENT for table `booking_teckets`
 --
 ALTER TABLE `booking_teckets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `fixtures`
 --
 ALTER TABLE `fixtures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `postponed_matchs`
@@ -250,7 +278,7 @@ ALTER TABLE `postponed_matchs`
 -- AUTO_INCREMENT for table `results`
 --
 ALTER TABLE `results`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `teams`
