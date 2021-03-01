@@ -4,7 +4,7 @@
                <div class="row">
                   <div class="col-sm-6">
                 
-				<p><center>  <h5><b>Built with pure HTML, CSS, PHP, JavaScript and Bootstrap</b></h5></center></p>
+				<p><center>  <h5><b>All Right Reserved &copy; 2021 bY REGIS</b></h5></center></p>
 				 
                   </div>                
                </div>
