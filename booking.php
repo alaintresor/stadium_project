@@ -76,7 +76,7 @@ if(!isset($_SESSION['user']))
 										<td>
 											<form  action="process_booking.php" method="post">
 											<input type="hidden" name="screen" value="<?php //echo $screen['screen_id'];?>"/>
-											<input type="number" id="seats1" required tile="Number of Seats" max="<?php //echo $screen['seats']-$avl[0];?>" min="0" name="seats" class="form-control" value="1" style="text-align:center" id="seats"/>
+											<input type="number" id="seats1r" required tile="Number of Seats" max="<?php //echo $screen['seats']-$avl[0];?>" min="0" name="seats" class="form-control" value="1" style="text-align:center" id="seats"/>
 											
 											<input type="hidden" name="amount" id="hm" value="<?php //echo $screen['charge'];?>"/>
 											<input type="hidden" name="date" value="<?php //echo $date;?>"/>
