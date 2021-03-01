@@ -3,7 +3,8 @@
 include('header.php');
 ?>
 <div class="content">
-	<div class="wrap">
+	<div class="wrap"><center>
+	<h1 style="background:yellow">Smart Stadium Ticket Selling System</h1></center>
 		<div class="content-top">
 				<div class="listview_1_of_3 images_1_of_3">
 					<h3>Upcoming Matches</h3>
@@ -110,5 +111,11 @@ include('header.php');
 		<?php include('fixtures_sidebar.php');?>
 	</div>
 </div>
+
+
+	</div></div>
+<br><br>
+
+
 <?php include('footer.php');?>
 </div>

@@ -18,7 +18,7 @@ if(!isset($_SESSION['user']))
 						<h3>Bookings</h3>
 						<?php include('msgbox.php');?>
 						<?php
-				$bk=mysqli_query($con,"select * from tbl_bookings where user_id='".$_SESSION['user']."'");
+				$bk=mysqli_query($con,"select * from booking_teckets where customer_id='".$_SESSION['user']."'");
 				if(mysqli_num_rows($bk))
 				{
 					?>
@@ -103,7 +103,7 @@ if(!isset($_SESSION['user']))
 			<div class="about span_1_of_2">	
 						<h3>Prepaid Details</h3>
 						<?php
-				$pr=mysqli_query($con,"select * from tbl_registration where user_id='".$_SESSION['user']."'");
+				$pr=mysqli_query($con,"select * from customers where id='".$_SESSION['user']."'");
 				if(mysqli_num_rows($pr))
 				{
 					?>
@@ -122,10 +122,10 @@ if(!isset($_SESSION['user']))
 							?>
 							<tr>
 								<td>
-								€	<?php echo $prepaid['totalAmount'];?>
+								€	<?php //echo $prepaid['totalAmount'];?>
 								</td>
 								<td>
-									<?php echo $prepaid['lastUpdate'];?>
+									<?php //echo $prepaid['lastUpdate'];?>
 								</td>
 							</tr>
 							<?php

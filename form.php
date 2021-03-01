@@ -100,12 +100,14 @@ class formBuilder
                     $err_msg="Enter a valid $label";
                     break;
                 case "mobile":
-                    $expression='/^[6]{1}[9]{1}[0-9]{8}$/';
+                   // $expression='/^(0?[0-9]?[0-9]|1[01][0-1]|11[0-1])$/';
+                   // $expression='/^[6]{1}[9]{1}[0-9]{8}$/';
                     $err_msg="Enter a valid $label";
                     break;
                     //https://stackoverflow.com/questions/45094533/php-regex-for-greek-mobile-phone-with-prefix-69
                 case "phone":
-                    $expression='/^[0-9]\d{2,4}-\d{6,8}$/';
+                  //  $expression='/^[0-9]\d{2,4}-\d{6,8}$/';
+                  $expression='/^(0?[0-9]?[0-9]|1[01][0-1]|11[0-1])$/';
                     $err_msg="Enter a valid $label";
                     break;
                 case "number":
@@ -118,10 +120,10 @@ class formBuilder
                     $err_msg="Enter a valid $label";
                     break;
             }
-            $this->validators=$this->validators."regexp: {
-                        regexp: $expression,
-                        message: '$err_msg'
-                    },";
+            // $this->validators=$this->validators."regexp: {
+            //          //   regexp: $expression,
+            //             message: '$err_msg'
+            //         },";
         }
         if (in_array("email",$rules)) // if rules array have value required
         {

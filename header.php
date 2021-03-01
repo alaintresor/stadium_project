@@ -7,25 +7,26 @@ session_start();
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Ticket Booking System</title>
+<title>Smart stadium ticket Selling System</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" href="validation/vendor/bootstrap/css/bootstrap.min.css">
+<script src="validation/vendor/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="header">
     <div class="header-top">
         <div class="wrap">
-              <div  class="nav-wrap">
-                    <ul  class="group" id="example-one">
-                       <li ><a href="index.php">Home</a></li>
-                       <li ><a href="fixtures_events.php"> All Fixtures</a></li>
+              <div  class="nav-wrap" style="height:0px;line-height:30px">
+                    <ul  class="group" id="example-one" style="height:0px;line-height:5px">
+                       <li style="color:white" ><a href="index.php" style="color:white">Home</a></li>
+                       <li style="color:white" ><a href="fixtures_events.php" style="color:white"> All Fixtures</a></li>
                      
-                        <li ><?php if(isset($_SESSION['user'])){
-                       $us=mysqli_query($con,"select * from tbl_registration where user_id='".$_SESSION['user']."'");
-        $user=mysqli_fetch_array($us);?><a href="profile.php"><?php echo $user['name'];?></a></li><li><a href="logout.php">Logout</a></li?<?php }else{?><a href="login.php">Login</a><?php }?></li>
+                       <?php if(isset($_SESSION['user'])){
+                       $us=mysqli_query($con,"select * from customers where id='".$_SESSION['user']."'");
+        $user=mysqli_fetch_array($us);?> <li style="color:white" ><a href="profile.php" style="color:white"><?php echo $user['fullname'];?></a></li>
+        <li style="color:white"><a style="color:white" href="logout.php">Logout</a></li>?<?php }else{?><li><a href="login.php" style="color:white">Login</a><?php }?></li>
                     </ul>	  
 			  </div>
  			<div class="clear"></div>

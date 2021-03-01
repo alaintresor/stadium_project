@@ -4,6 +4,7 @@
 			<div class="footer-top">
 				<div class="col_1_of_4 span_1_of_4">
 					<div class="footer-nav">
+					<h1 style="color:white">Useful Links</h1>
 		                <ul>
 		                   <li><a href="index.php">Home</a></li>
 			  		   <li><a href="fixtures_events.php">Fixtures</a></li>
@@ -13,12 +14,17 @@
 				</div>
 				<div class="col_1_of_4 span_1_of_4">
 					<div class="textcontact">
-						<p>COPYRIGHT © 2021. Project By Regis.
+						<p><h5 style="color:white">COPYRIGHT © 2021.</h5>
+						
+						</p>
+						<p><h5 style="color:white">Project By Regis</h5>
+						
 						</p>
 					</div>
+				
 				</div>
 				<div class="col_1_of_4 span_1_of_4">
-				
+				<img src="images/ferwa.jpg">
 				</div>
 				<div class="clear"></div>
 			</div>
