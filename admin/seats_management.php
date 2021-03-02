@@ -10,7 +10,7 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
     }
 }
 
-$sql = "SELECT * FROM `seats_and_prices` order by id desc";
+$sql = "SELECT * FROM `seats_and_prices` ORDER BY id DESC";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -52,7 +52,7 @@ $res = mysqli_query($con, $sql);
                                 <tbody>
                                     <?php
                                     $i = 1;
-                                    while ($row = mysqli_fetch_assoc($res)) { ?>
+                                    while ($row = mysqli_fetch_array($res)) { ?>
                                         <tr>
                                             <td class="serial"><?php echo $i ?></td>
                                             <td><?php echo $row['fixture_id'] ?></td>
