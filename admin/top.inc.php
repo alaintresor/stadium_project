@@ -36,7 +36,6 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
       <nav class="navbar navbar-expand-sm navbar-default">
          <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
-               <li class="menu-title">MENU</li>
                <li class="menu-item-has-children dropdown">
                   <a href="index.php"> DASHBOARD </a>
                </li>
@@ -66,7 +65,13 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                   <li class="menu-item-has-children dropdown">
                      <a href="manger_reports.php"> REPORT </a>
                   </li>
-               <?php } ?>
+               <?php } else if ($_SESSION['ADMIN_ROLE'] == 2) { ?>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="check_teckets.php">CHECK TECKET </a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="stadiumAgent_reports.php"> REPORT </a>
+                  <?php } ?>
             </ul>
          </div>
       </nav>

@@ -1,5 +1,6 @@
 <?php
 require('top.inc.php');
+$con = mysqli_connect("localhost", "root", "", "stadium");
 ?>
 <style>
 	#dashbroad-card {
@@ -20,21 +21,26 @@ require('top.inc.php');
 						<div class="row text-center">
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h4>8 Teams</h4>
+									<img src="images/teams.png" alt="" width="150">
+									<?php $teams = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM teams")) ?>
+									<h3>Teams: <b><?php echo $teams[0] ?></b> </h3>
 								</div>
 
 							</div>
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h4>3 Postponed Match</h4>
+									<img src="images/postponed.png" alt="" width="150">
+									<?php $postponed = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM postponed_matchs")) ?>
+									<h3>Postponed Match(es): <b> <?php echo $postponed[0] ?></b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h4>Today's Macth 7</h4>
+									<img src="images/timer.png" alt="" width="150">
+									<?php $today = date("Y-m-d");
+									$day = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM fixtures WHERE `date`='$today'"));
+									?>
+									<h3>Today's Macth: <b> <?php echo $day[0] ?></b></h3>
 								</div>
 							</div>
 						</div>
@@ -42,20 +48,23 @@ require('top.inc.php');
 						<div class="row text-center">
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h4>8 Teams</h4>
+									<img src="images/fixtures.png" alt="" width="150">
+									<?php
+									$fixtures = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM fixtures"));
+									?>
+									<h3>Fixtures <b><?php echo $fixtures[0] ?></b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h4>3 Postponed Match</h4>
+									<img src="images/competition.png" alt="" width="150">
+									<h3>Competition: <b>4</b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h4>Today's Macth 7</h4>
+									<img src="images/division.jpg" alt="" width="150">
+									<h3>Divisions: <b>2</b></h3>
 								</div>
 							</div>
 						</div>
@@ -63,21 +72,25 @@ require('top.inc.php');
 						<div class="row text-center">
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
+									<img src="images/tickets.png" alt="" width="150">
 									<h3>Sold Tickets: <b>206</b></h3>
 								</div>
 
 							</div>
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h3>Postponed Matches: <b>3</b></h3>
+									<img src="images/postponed.png" alt="" width="150">
+									<?php $postponed = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM postponed_matchs")) ?>
+									<h3>Postponed Match(es): <b> <?php echo $postponed[0] ?></b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
-									<img src="images/MyLogo.PNG" alt="" width="150">
-									<h3>Today's Macth: <b> 7</b></h3>
+									<img src="images/timer.png" alt="" width="150">
+									<?php $today = date("Y-m-d");
+									$day = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM fixtures WHERE `date`='$today'"));
+									?>
+									<h3>Today's Macth: <b> <?php echo $day[0] ?></b></h3>
 								</div>
 							</div>
 						</div>
