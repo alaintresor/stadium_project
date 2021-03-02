@@ -2,6 +2,7 @@
 if (!isset($_SESSION['user'])) {
 	header('location:login.php');
 }
+
 $qry2 = mysqli_query($con, "select * from fixtures where id='" . $_GET['id'] . "'");
 $fix = mysqli_fetch_array($qry2);
 ?>
@@ -58,15 +59,16 @@ $fix = mysqli_fetch_array($qry2);
 							<td>
 								Seats
 							</td>
+							<form action="stripe/paywithcard.php" method="post">
 							<td><select class="form-control" onchange="getSeat();" id="category">
-									<option selected="" disabled="">Choose Seat</option>
+									<option selected="" name='cat' disabled="">Choose Seat</option>
 									<option>VVIP</option>
 									<option>VIP</option>
 									<option>Roofed</option>
 									<option>UnRoofed</option>
 
 								</select>
-								Available Seat: <b><input Type="text" id="seatsNber"></b>
+								Available Seat: <b><input Type="text" readonly id="seatsNber"></b>
 							</td>
 						</tr>
 						<tr>
@@ -74,7 +76,7 @@ $fix = mysqli_fetch_array($qry2);
 								Number of Seats
 							</td>
 							<td>
-								<form action="process_booking.php" method="post">
+								
 									<input type="hidden" name="screen" value="<?php //echo $screen['screen_id'];
 																				?>" />
 									<input type="number" id="bookingSeats" required tile="Number of Seats" onchange="calculateAmount();" min="1" max="<?php //echo $screen['seats']-$avl[0];
@@ -91,16 +93,18 @@ $fix = mysqli_fetch_array($qry2);
 								Amount
 							</td>
 							<td id="amount" style="font-weight:bold;font-size:18px">
-								€ <?php// echo $screen['charge'];?>
+								
 							</td>
 						</tr>
-						<tr>
+						<tr><?php
+					//	$qry2 = mysqli_query($con, "select COUNT() from fixtures where id='" . $_GET['id'] . "'");
+//$fix = mysqli_fetch_array($qry2); ?>	</form>
 							<td colspan="2"><?php //if($avl[0]==$screen['seats']){
-											?><button type="button" class="btn btn-danger" style="width:100%">House Full</button><?php// } else { ?>
-								<button class="btn btn-info" style="width:100%">Book Now</button>
-								<?php //} 
+											// ?><!--<button type="button" class="btn btn-danger" style="width:100%">House Full</button>--><?php// } else { ?>
+								<a href='stripe/paywithcard.php?id=<?php echo $_GET['id'] ?>&cat=<?php echo ?>'><button type='submit' name='book' class="btn btn-info" style="width:100%">Book Now</button><a>
+								<?php// } 
 								?>
-								</form>
+							
 							</td>
 						</tr>
 						<table>
