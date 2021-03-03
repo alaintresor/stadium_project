@@ -1,10 +1,10 @@
 <?php
 	// Account details
-	$apiKey = urlencode('Your apiKey');
+	$apiKey = urlencode('QCZCGpsNseI-gd0snkBj4zC49shTyTbP1AAW9AgNMX');
 	
 	// Message details
-	$numbers = array(447123456789, 447987654321);
-	$sender = urlencode('Jims Autos');
+	$numbers = array(+250780640237, );
+	$sender = urlencode('Smart Ticket System');
 	$message = rawurlencode('This is your message');
  
 	$numbers = implode(',', $numbers);
