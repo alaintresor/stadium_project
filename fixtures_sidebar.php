@@ -29,8 +29,25 @@
 					$sel2 = $con->query("SELECT name,logo FROM teams WHERE id='" . $row['away_team'] . "'");
 					$res = mysqli_fetch_array($sel1);
 					$res1 = mysqli_fetch_array($sel2);
+				
+
+					date_default_timezone_set("Africa/CAIRO");
+$time = $row['time'];
+$time2 = "00:15";
+
+$secs = strtotime($time2)-strtotime("00:00");
+$result = date("H:i",strtotime($time)+$secs);
+$currentTime=date("H:i");
+// echo "The time is " . $currentTime;
+// if($currentTime>$result){
+//     echo "match ended";
+// }else{
+//     echo "you can book";
+// }
+//echo $result;
+
 				?>
-					<a href="about.php?id=<?php echo $row[0] ?>">
+					<a href="about.php?id=<?php echo $row[0] ?>&time=<?php echo$result ?>">
 						<div class="listimg listimg_1_of_2" >
 							<img src="<?php echo $res[1];  ?>">
 							<h6>Vs</h6>

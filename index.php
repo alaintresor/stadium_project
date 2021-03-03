@@ -3,15 +3,18 @@ include('header.php');
 ?>
 <div class="content">
 	<div class="wrap">
-		<center>
-			<h1 style="background:yellow">Smart Stadium Ticket Selling System</h1>
-		</center>
+		
 		<div class="content-top">
 			<div class="listview_1_of_3 images_1_of_3">
 				<h3>Upcoming Matches</h3>
 				<div class="content-left">
 				
 					<?php $today=date("Y-m-d"); $sel = $con->query("SELECT * FROM fixtures WHERE date>'$today' AND status ='active' ORDER BY date desc limit 3");
+					if(mysqli_num_rows($sel)<=0){ ?>
+						<center>
+						<h1 style="background:yellow">Smart Stadium Ticket Selling System</h1>
+					</center>
+					<?php }else{
 					while ($row = mysqli_fetch_array($sel)) {
                  
 						$sel1 = $con->query("SELECT name,logo FROM teams WHERE id='" . $row['home_team'] . "'");
@@ -40,7 +43,7 @@ include('header.php');
 						</div>
 						<div class="clear"></div>
 						</a>
-					<?php } ?>
+					<?php } } ?>
 				</div>
 
 

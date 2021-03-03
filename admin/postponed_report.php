@@ -108,10 +108,9 @@ $res = mysqli_query($con, $sql);
     <div class="container">
         <div class="logo">
             <br>
-            <label style="font-size:15px;">Marketing Application For Famers</label><br>
-            <label style="font-size:12px;">Email: applicatio@gmail.com</label><br>
+            <label style="font-size:15px;">Smart Stadium Ticket Selling System</label><br>
+            <label style="font-size:12px;">Email: smartstadium@gmail.com</label><br>
             <label style="font-size:12px;">Mobile: +250780640237</label><br>
-            <label style="font-size:12px;">Address: Huye, Rwanda</label><br>
             <br><br>
 
             <strong style="font-size:14px;"> Report of Postponed Matches for
