@@ -34,6 +34,8 @@ if (isset($_POST['submit'])) {
             mysqli_query($con, $update_sql);
         } else {
             mysqli_query($con, "INSERT INTO `results` (`id`, `fixture_id`, `home_team_result`, `away_team_result`) VALUES (NULL, '$fixtureId', '$homeResult', '$awayResult');");
+            mysqli_query($con, "UPDATE fixtures set status='end' WHERE id='$fixtureId'");
+            
         }
         header('location:result_management.php');
         die();
