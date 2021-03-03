@@ -41,6 +41,57 @@ if (isset($_POST['submit'])) {
             // updating date on fixtures
             mysqli_query($con, "UPDATE `fixtures` SET `date`='$movedOn',`time`='$movedAt',`status`='postponed' WHERE `id`='$fixtureId'");
         } else {
+            $selp=mysqli_query($con,"SELECT * FROM booking_teckets WHERE fixture_id='$fixtureId'");
+            while($row=mysqli_fetch_array($selp)){
+                $sel=$con->query("SELECT telephone FROM customers WHERE id='".$row['1']."'");
+                $res=mysqli_fetch_array($sel);
+                      	// Account details
+	$apiKey = urlencode('QCZCGpsNseI-gd0snkBj4zC49shTyTbP1AAW9AgNMX');
+	
+	// Message details
+	$numbers = array($res[0], );
+	$sender = urlencode('Smart Ticket System');
+	$message = rawurlencode('This is your message');
+ 
+	$numbers = implode(',', $numbers);
+ 
+	// Prepare data for POST request
+	$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+ 
+	// Send the POST request with cURL
+	$ch = curl_init('https://api.txtlocal.com/send/');
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($ch);
+	curl_close($ch);
+	
+	// Process your response here
+	echo $response;
+            }
+    //         	// Account details
+	// $apiKey = urlencode('QCZCGpsNseI-gd0snkBj4zC49shTyTbP1AAW9AgNMX');
+	
+	// // Message details
+	// $numbers = array(, );
+	// $sender = urlencode('Smart Ticket System');
+	// $message = rawurlencode('This is your message');
+ 
+	// $numbers = implode(',', $numbers);
+ 
+	// // Prepare data for POST request
+	// $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+ 
+	// // Send the POST request with cURL
+	// $ch = curl_init('https://api.txtlocal.com/send/');
+	// curl_setopt($ch, CURLOPT_POST, true);
+	// curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	// $response = curl_exec($ch);
+	// curl_close($ch);
+	
+	// // Process your response here
+	// echo $response;
             mysqli_query($con, "INSERT INTO `postponed_matchs` (`id`, `fixture_id`, `reason`,`fromOn`,`fromAt`, `moved_date`, `moved_time`) VALUES (NULL, '$fixtureId', '$reason','$fromOn[0]','$fromAt[0]', '$movedOn', '$movedAt')");
             // updating date on fixtures
             mysqli_query($con, "UPDATE `fixtures` SET `date`='$movedOn',`time`='$movedAt',`status`='postponed' WHERE `id`='$fixtureId'");
