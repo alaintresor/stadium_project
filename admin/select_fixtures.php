@@ -16,7 +16,7 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
 	}
 }
 
-$sql = "select * from fixtures";
+$sql = "SELECT * FROM fixtures WHERE `status`='deactive' OR `status`='active' order by date,time asc ";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -48,7 +48,11 @@ $res = mysqli_query($con, $sql);
 								<tbody>
 									<?php
 									$i = 0;
+									$today = date("Y-m-d");
 									while ($row = mysqli_fetch_assoc($res)) {
+										if ($row['date'] < $today) {
+											mysqli_query($con, "UPDATE `fixtures` SET `status`='end' WHERE `id`='{$row['id']}'");
+										}
 										$homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}'"));
 
 										$awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}'"));

@@ -63,6 +63,9 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                      <a href="seats_management.php">PRICE & SEAT </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
+                     <a href="postponed.php">POSTPONED MATCH </a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
                      <a href="manger_reports.php"> REPORT </a>
                   </li>
                <?php } else if ($_SESSION['ADMIN_ROLE'] == 2) { ?>

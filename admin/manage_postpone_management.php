@@ -15,7 +15,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     if ($check > 0) {
         $row = mysqli_fetch_assoc($res);
         $fixtureId = $row['fixture_id'];
-        $movedON = $row['moved_date'];
+        $movedOn = $row['moved_date'];
         $movedAt = $row['moved_time'];
         $reason = $row['reason'];
     } else {
@@ -30,12 +30,20 @@ if (isset($_POST['submit'])) {
     $movedOn = get_safe_value($con, $_POST['movedOn']);
     $movedAt = get_safe_value($con, $_POST['movedAt']);
 
+    $fromOn = mysqli_fetch_array(mysqli_query($con, "SELECT date FROM `fixtures` WHERE `id`='$fixtureId'"));
+
+    $fromAt = mysqli_fetch_array(mysqli_query($con, "SELECT time FROM `fixtures` WHERE `id`='$fixtureId'"));
+
     if ($msg == '') {
         if (isset($_GET['id']) && $_GET['id'] != '') {
-            $update_sql = "update postponed_matchs set fixture_id='$fixtureId',reason='$reason',moved_date='$movedOn',moved_time='$movedAt' where id='$id'";
+            $update_sql = "update postponed_matchs set fixture_id='$fixtureId',reason='$reason',fromOn='$fromOn[0]',fromAt='$fromAt[0]',moved_date='$movedOn',moved_time='$movedAt' where id='$id'";
             mysqli_query($con, $update_sql);
+            // updating date on fixtures
+            mysqli_query($con, "UPDATE `fixtures` SET `date`='$movedOn',`time`='$movedAt',`status`='postponed' WHERE `id`='$fixtureId'");
         } else {
-            mysqli_query($con, "INSERT INTO `postponed_matchs` (`id`, `fixture_id`, `reason`, `moved_date`, `moved_time`) VALUES (NULL, '$fixtureId', '$reason', '$movedOn', '$movedAt')");
+            mysqli_query($con, "INSERT INTO `postponed_matchs` (`id`, `fixture_id`, `reason`,`fromOn`,`fromAt`, `moved_date`, `moved_time`) VALUES (NULL, '$fixtureId', '$reason','$fromOn[0]','$fromAt[0]', '$movedOn', '$movedAt')");
+            // updating date on fixtures
+            mysqli_query($con, "UPDATE `fixtures` SET `date`='$movedOn',`time`='$movedAt',`status`='postponed' WHERE `id`='$fixtureId'");
         }
         header('location:postpone_management.php');
         die();

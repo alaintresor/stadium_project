@@ -90,7 +90,10 @@ if (isset($_POST['submit'])) {
 							</div>
 							<div class="form-group">
 								<label for="homeTeam" class=" form-control-label">Competition</label>
-								<input type="text" name="competition" placeholder="Enter which competition " class="form-control" required value="<?php echo $competition ?>">
+								<select name="competition" class="form-control" required value="<?php echo $competition ?>">
+									<option>Ikikombe cya amahoro</option>
+									<option>Ikikombe cya champion</option>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="homeTeam" class=" form-control-label">Home Team ID</label>

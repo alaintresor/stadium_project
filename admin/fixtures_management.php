@@ -11,7 +11,7 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
 	}
 }
 
-$sql = "select * from fixtures";
+$sql = "select * from fixtures WHERE `status`!='end' order by id desc";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -39,13 +39,14 @@ $res = mysqli_query($con, $sql);
 									<tr>
 										<th class="serial">#</th>
 										<th>ID</th>
-										<th>Date</th>
+										<th width="5%">Date</th>
 										<th>Time</th>
 										<th width="5%">competition</th>
-										<th>Home</th>
-										<th>Away</th>
+										<th width="5%">Home</th>
+										<th width="5%">Away</th>
 										<th width="5%">Location</th>
-										<th width="20%">Desrciption</th>
+										<th width="15%">Desrciption</th>
+										<th width="3%">Status</th>
 										<th>Actions</th>
 										<th></th>
 									</tr>
@@ -53,7 +54,11 @@ $res = mysqli_query($con, $sql);
 								<tbody>
 									<?php
 									$i = 0;
+									$today = date("Y-m-d");
 									while ($row = mysqli_fetch_assoc($res)) {
+										if ($row['date'] < $today) {
+											mysqli_query($con, "UPDATE `fixtures` SET `status`='end' WHERE `id`='{$row['id']}'");
+										}
 										$homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}'"));
 
 										$awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}'"));
@@ -69,6 +74,13 @@ $res = mysqli_query($con, $sql);
 											<td><?php echo $awayTeam[0] ?></td>
 											<td><?php echo $row['location'] ?></td>
 											<td><?php echo $row['description'] ?></td>
+											<td><?php
+												if ($row['status'] == 'postponed') {
+													echo $row['status'];
+												} else {
+													echo "Active";
+												}
+												?></td>
 
 											<td>
 												<?php
