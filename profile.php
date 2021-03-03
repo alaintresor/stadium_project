@@ -25,10 +25,10 @@ if(!isset($_SESSION['user']))
 					<table class="table table-bordered">
 						<thead>
 						<th>Ticket ID</th>
-						<th>Band</th>
+						<th>Matches</th>
 						<th>Stadium</th>
-						<th>tier</th>
-						<th>Show</th>
+						<th>Seat</th>
+						<th>Date</th>
 						<th>Seats</th>
 						<th>Amount</th>
 						<th></th>
@@ -37,48 +37,56 @@ if(!isset($_SESSION['user']))
 						<?php
 						while($bkg=mysqli_fetch_array($bk))
 						{
-							$m=mysqli_query($con,"select * from tbl_concert where concert_id=(select concert_id from tbl_shows where s_id='".$bkg['show_id']."')");
-							$mov=mysqli_fetch_array($m);
-							$s=mysqli_query($con,"select * from tbl_screens where screen_id='".$bkg['screen_id']."'");
-							$srn=mysqli_fetch_array($s);
-							$tt=mysqli_query($con,"select * from tbl_stadium where id='".$bkg['t_id']."'");
-							$thr=mysqli_fetch_array($tt);
-							$st=mysqli_query($con,"select * from tbl_show_time where st_id=(select st_id from tbl_shows where s_id='".$bkg['show_id']."')");
-							$stm=mysqli_fetch_array($st);
+							
 							?>
 							<tr>
 								<td>
-									<?php echo $bkg['ticket_id'];?>
+									<?php echo $bkg['id'];?>
 								</td>
 								<td>
-									<?php echo $mov['concert_name'];?>
+
+									<?php
+									 $qry2 = mysqli_query($con,"select * from fixtures where id='".$bkg['fixture_id']."'");
+									 $fix = mysqli_fetch_array($qry2);
+									 $sel1 = $con->query("SELECT name,logo FROM teams WHERE id='" . $fix['home_team'] . "'");
+									 $sel2 = $con->query("SELECT name,logo FROM teams WHERE id='" . $fix['away_team'] . "'");
+									 $res = mysqli_fetch_array($sel1);
+									 $res1 = mysqli_fetch_array($sel2);
+									 echo "<b>(" . $res[0] . " Vs " . $res1[0].")</b>"; 
+									
+									?>
 								</td>
 								<td>
-									<?php echo $thr['name'];?>
+									<?php echo $fix['location'];?>
 								</td>
 								<td>
-									<?php echo $srn['screen_name'];?>
+									<?php echo $bkg['seat'];?>
+								</td>
+									<td>
+									<?php echo $bkg['date'];?>
 								</td>
 								<td>
-									<?php echo $stm['name'];?>
+									<?php echo $bkg['n_of_seats'];?>
 								</td>
 								<td>
-									<?php echo $bkg['no_seats'];?>
+									<?php echo $bkg['amount'];?>
 								</td>
 								<td>
-									€ <?php echo $bkg['amount'];?>
+									Rwf <?php echo $bkg['amount'];?>
 								</td>
 								<td>
-									<?php  if($bkg['ticket_date']<date('Y-m-d'))
+									<?php  if($bkg['date']<date('Y-m-d'))
 									{
 										?>
-										<i class="glyphicon glyphicon-ok"></i>
+										<i class="glyphicon glyphicon-ok">finished</i>
 										<?php
 									}
 									else
 									{?>
-									<button data-toggle="modal"  data-target="#cancel" class="btn btn-danger btn-sm" data-toggle="modal"><i class="fa fa-trash"></i> <a style="color:white;     text-decoration: none;
-" href="cancel.php?id=<?php echo $bkg['book_id'];?>">Cancel</a></i></button>
+									<b>Pending</b>
+<!-- <button data-toggle="modal"  data-target="#cancel" class="btn btn-danger btn-sm"
+ data-toggle="modal"><i class="fa fa-trash"></i> <a style="color:white;     text-decoration: none;
+" href="cancel.php?id=<?php echo $bkg['id'];?>">Cancel</a></i></button> -->
 									<?php
 									}
 									?>
@@ -98,40 +106,16 @@ if(!isset($_SESSION['user']))
 				}
 				?>
 					</div>		
-		         <?php include('fixtures_sidebar.php');?>
+		       
 			</div>
 			<div class="about span_1_of_2">	
-						<h3>Prepaid Details</h3>
+						
 						<?php
 				$pr=mysqli_query($con,"select * from customers where id='".$_SESSION['user']."'");
 				if(mysqli_num_rows($pr))
 				{
 					?>
-					<table class="table table-bordered">
-						<thead>
-						<th>Total Amount</th>
-						<th>Last Update</th>
-
-
-						</thead>
-						<tbody>
-						<?php
-						while($prepaid=mysqli_fetch_array($pr))
-						{
-						
-							?>
-							<tr>
-								<td>
-								€	<?php //echo $prepaid['totalAmount'];?>
-								</td>
-								<td>
-									<?php //echo $prepaid['lastUpdate'];?>
-								</td>
-							</tr>
-							<?php
-						}
-						?></tbody>
-					</table>
+				
 					<?php
 				}
 				else
@@ -140,19 +124,8 @@ if(!isset($_SESSION['user']))
 					<h3>No Account Details</h3>
 					<?php
 				}
-				?>		</div><div class="about span_1_of_2">	
-						<h3>Update your prepaid</h3>
-												<div>
-            <label for="display-name"> Give the amount:
-            	 <span class="warning">*(Allows only digits.)</span>
-            </label>
-            <form method="post" action="update.php">
-            <input type="number" id="update" name="newAmountCard"
-                   pattern="^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})$"
-                   maxlength="250" minlength="1"  required /><button  class="btn btn-success btn-sm" ><a style="color:white;text-decoration: none;
-" href="update.php?id=<?php echo $prepaid['prepaid_id'];?>">Update your card</a></button>
-            <span></span>
-              </form>
+				?>		</div>
+          
         </div>
 					</div>	
 		

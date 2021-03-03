@@ -10,8 +10,8 @@ include('header.php');
 			<div class="listview_1_of_3 images_1_of_3">
 				<h3>Upcoming Matches</h3>
 				<div class="content-left">
-
-					<?php $sel = $con->query("SELECT * FROM fixtures WHERE status ='active'");
+				
+					<?php $today=date("Y-m-d"); $sel = $con->query("SELECT * FROM fixtures WHERE date>'$today' AND status ='active'");
 					while ($row = mysqli_fetch_array($sel)) {
 
 						$sel1 = $con->query("SELECT name,logo FROM teams WHERE id='" . $row['home_team'] . "'");
@@ -21,24 +21,24 @@ include('header.php');
 					?>
 						<a href="about.php?id=<?php echo $row[0] ?>">
 							<div class="listimg listimg_1_of_2">
-								<img src="<?php echo $res[1];  ?>">
+								<img src="<?php echo $res[1]; ?>">
 								<h6>Vs</h6>
-								<img src="<?php echo $res[1];  ?>">
+								<img src="<?php echo $res1[1];  ?>">
 							</div>
-							<div class="text list_1_of_2">
-								<div class="extra-wrap">
-									<span style="text-color:#000" class="data"><strong><?php
+							<div class="text list_1_of_2" style="background:darkgreen; text-align:center;color:white;border-radius:10px 4px 4px 4px;">
+							<div class="extra-wrap">
+								<span style="color:white" class="data"><strong><?php
 
-																						echo $res[0] . " Vs " . $res1[0];
-																						?>
-											<?php
-											?></strong><br>
-										<span style="text-color:#000" class="data"><strong>Location: <?php echo $row['location'] ?></strong><br>
-											<div class="data">Date :<?php echo $row['date'] ?>, Time <?php echo $row['time'] ?></div>
-											<span class="text-top"></span>
-								</div>
+									echo $res[0] . " Vs " . $res1[0];
+																					?>
+										<?php
+										?></strong><br>
+									<span style="color:white" class="data"><strong>Location: <?php echo $row['location'] ?></strong><br>
+										<div class="data"  style="color:white">Date :<?php echo $row['date'] ?>, Time <?php echo $row['time'] ?></div>
+										<span class="text-top"></span>
 							</div>
-							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
 						</a>
 					<?php } ?>
 				</div>
@@ -67,6 +67,15 @@ include('header.php');
 						}
 				?> -->
 			</div>
+			<?php $today=date("Y-m-d"); $sel = $con->query("SELECT * FROM results");
+					while ($row = mysqli_fetch_array($sel)) {
+						$sel = $con->query("SELECT * FROM fixtures WHERE id='".$row[1]."'");
+						$row1 = mysqli_fetch_array($sel);
+						$sel3 = $con->query("SELECT name,logo FROM teams WHERE id='" .$row1['home_team']."'");
+						$sel2 = $con->query("SELECT name,logo FROM teams WHERE id='" . $row1['away_team'] . "'");
+						$res = mysqli_fetch_array($sel3);
+						$res1 = mysqli_fetch_array($sel2);
+					?>
 			<div class="listview_1_of_3 images_1_of_3">
 				<h3>Latest Result</h3>
 				<div class="middle-list">
@@ -77,14 +86,14 @@ include('header.php');
 						<div class="text list_1_of_2">
 							<div class="extra-wrap">
 								<span style="text-color:#000" class="data"><strong><?php ?></strong><br>
-									<span style="text-color:#000" class="data"><strong>MUKURA VC 0-1 MUHANGA FC<?php ?></strong><br>
-										<div class="data">Ended<?php ?></div>
-										<span class="text-top">Stadium: Huye Stadium</span>
+									<span style="text-color:#000" class="data"><strong><?php echo $res[0]." ".$row[2]." - ".$row[3] ?> <?php echo $res1[0]?><?php ?></strong><br>
+										<div class="data">Date <?php echo $row1[1] ?></div>
+										<span class="text-top">Stadium:  <?php echo $row1['location'] ?></span>
 							</div>
 						</div>
 						<div class="clear"></div>
 					</div>
-
+             <?php } ?>
 				</div>
 			</div>
 			<?php include('fixtures_sidebar.php'); ?>

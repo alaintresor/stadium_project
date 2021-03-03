@@ -60,7 +60,7 @@ $fix = mysqli_fetch_array($qry2);
 								Seats
 							</td>
 							<form action="stripe/paywithcard.php" method="post">
-							<td><select class="form-control" onchange="getSeat();" id="category">
+							<td><select  name='b_cat' class="form-control" onchange="getSeat();" id="category">
 									<option selected="" name='cat' disabled="">Choose Seat</option>
 									<option>VVIP</option>
 									<option>VIP</option>
@@ -68,7 +68,7 @@ $fix = mysqli_fetch_array($qry2);
 									<option>UnRoofed</option>
 
 								</select>
-								Available Seat: <b><input Type="text" readonly id="seatsNber"></b>
+								Available Seat: <b><input Type="text" name='Avseat'  required=" " readonly id="seatsNber"></b>
 							</td>
 						</tr>
 						<tr>
@@ -77,14 +77,13 @@ $fix = mysqli_fetch_array($qry2);
 							</td>
 							<td>
 								
-									<input type="hidden" name="screen" value="<?php //echo $screen['screen_id'];
-																				?>" />
+								
 									<input type="number" id="bookingSeats" required tile="Number of Seats" onchange="calculateAmount();" min="1" max="<?php //echo $screen['seats']-$avl[0];
 																																						?>" min="0" name="seats" class="form-control" value="1" style="text-align:center" id="seats" />
-
-									<input type="hidden" name="amount" id="hm" value="<?php //echo $screen['charge'];
+                                       <input type="hidden" name="user_id" id="hm" value="<?php echo $_SESSION['user']; ?>">
+									<input type="hidden" name="id" id="hm" value="<?php echo $_GET['id'];
 																						?>" />
-									<input type="hidden" name="date" value="<?php //echo $date;
+									<input type="hidden" name="date" value="<?php echo $fix['date'];
 																			?>" />
 							</td>
 						</tr>
@@ -92,19 +91,21 @@ $fix = mysqli_fetch_array($qry2);
 							<td>
 								Amount
 							</td>
-							<td id="amount" style="font-weight:bold;font-size:18px">
+						
+							<td id="amount" name='amount'  style="font-weight:bold;font-size:18px">
 								
 							</td>
 						</tr>
 						<tr><?php
 					//	$qry2 = mysqli_query($con, "select COUNT() from fixtures where id='" . $_GET['id'] . "'");
-//$fix = mysqli_fetch_array($qry2); ?>	</form>
+//$fix = mysqli_fetch_array($qry2); ?>	
 							<td colspan="2"><?php //if($avl[0]==$screen['seats']){
 											// ?><!--<button type="button" class="btn btn-danger" style="width:100%">House Full</button>--><?php// } else { ?>
-								<a href='stripe/paywithcard.php?id=<?php echo $_GET['id'] ?>&cat=<?php echo ?>'><button type='submit' name='book' class="btn btn-info" style="width:100%">Book Now</button><a>
+							
+								<button type='submit' onclick="check();" name='book' class="btn btn-info" style="width:100%">Book Now</button><a>
 								<?php// } 
 								?>
-							
+							</form>
 							</td>
 						</tr>
 						<table>
@@ -121,6 +122,16 @@ $fix = mysqli_fetch_array($qry2);
 </div>
 <?php include('footer.php'); ?>
 <script type="text/javascript">
+    const check = () => {
+		//alert("not seat available");
+		window.open('booking.php','_self');
+		  //  echo "<center><script>alert('Successfully charged');window.open('receipt.php','_self');</center>";
+		// var x =document.getElementByName['Avseat'].value;
+		// if(x==0){
+		// 	alert("not seat available");
+		// }
+
+	}
 	var fixtureId = "<?php echo $_GET['id'] ?>";
 	//get seats according to category
 	const getSeat = () => {
