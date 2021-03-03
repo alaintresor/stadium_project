@@ -1,6 +1,13 @@
 <?php
 require('top.inc.php');
 isAdmin();
+
+//getting all competitions 
+$compQuery = mysqli_query($con, "SELECT * FROM `competitions`");
+$compQuery2 = mysqli_query($con, "SELECT * FROM `competitions`");
+$compQuery3 = mysqli_query($con, "SELECT * FROM `competitions`");
+
+
 ?>
 <style>
     #dashbroad-card {
@@ -24,8 +31,10 @@ isAdmin();
                                             <div class="form-group">
                                                 <label for="date" class=" form-control-label">MATCHES RESULTS</label>
                                                 <select id="result" class="form-control">
-                                                    <option value="1">Ikikombe cya mahoro</option>
-                                                    <option value="2">Ikikombe cya champion</option>
+                                                    <?php while ($row = mysqli_fetch_array($compQuery)) { ?>
+                                                        <option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </td>
@@ -42,8 +51,10 @@ isAdmin();
                                             <div class="form-group">
                                                 <label for="date" class=" form-control-label">MATCHES FIXTURES</label>
                                                 <select id="fixtures" class="form-control">
-                                                    <option value="1">Ikikombe cy'amahoro</option>
-                                                    <option value="2">Ikikombe cya champion</option>
+                                                    <?php while ($row = mysqli_fetch_array($compQuery2)) { ?>
+                                                        <option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </td>
@@ -63,8 +74,10 @@ isAdmin();
                                             <div class="form-group">
                                                 <label for="date" class=" form-control-label">POSTPONED MATCHES </label>
                                                 <select id="postponed" class="form-control">
-                                                    <option value="1">Ikikombe cy'amahoro</option>
-                                                    <option value="2">Ikikombe cya chamption</option>
+                                                    <?php while ($row = mysqli_fetch_array($compQuery3)) { ?>
+                                                        <option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </td>

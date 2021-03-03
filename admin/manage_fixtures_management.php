@@ -11,11 +11,13 @@ $descriptions = '';
 
 $msg = '';
 if (isset($_GET['id']) && $_GET['id'] != '') {
+	echo "<script> console.log('testing')</script>";
 	$image_required = '';
 	$id = get_safe_value($con, $_GET['id']);
 	$res = mysqli_query($con, "select * from fixtures where id='$id'");
 	$check = mysqli_num_rows($res);
 	if ($check > 0) {
+
 		$row = mysqli_fetch_assoc($res);
 		$date = $row['date'];
 		$time = $row['time'];
@@ -25,6 +27,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
 		$location = $row['location'];
 		$descriptions = $row['description'];
 	} else {
+		echo "<script> console.log('no')</script>";
 		header('location:fixtures_management.php');
 		die();
 	}
@@ -40,7 +43,7 @@ if (isset($_POST['submit'])) {
 	$descriptions = get_safe_value($con, $_POST['descriptions']);
 	if (isset($_GET['id']) && $_GET['id'] != '') {
 	} else {
-		$img = "../images/upload/" . $_FILES['image']['name'];
+		$img = "images/upload/" . $_FILES['image']['name'];
 		$imgName =  $_FILES['image']['name'];
 		$target_dir = "../images/upload/";
 		$target_photo = $target_dir . basename($_FILES["image"]["name"]);
@@ -57,18 +60,34 @@ if (isset($_POST['submit'])) {
 
 	if ($msg == '') {
 		if (isset($_GET['id']) && $_GET['id'] != '') {
-			$update_sql = "update fixtures set date='$date',time='$time',competition='$competition',home_team='$homeId',way_team='$awayId',location='$location',description='$descriptions' where id='$id'";
-			mysqli_query($con, $update_sql);
+			echo "<script> console.log('testing888')</script>";
+			$update_sql = "update fixtures set date='$date',time='$time',competition='$competition',home_team='$homeId',away_team='$awayId',location='$location',description='$descriptions' where id='$id'";
+			$done = mysqli_query($con, $update_sql);
+			if ($done) {
+				echo "<script> console.log('WE')</script>";
+			} else $msg = "Error: " . mysqli_error($con);
 		} else {
 			$done = mysqli_query($con, "INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`, `status`) VALUES (NULL, '$date', '$time', '$competition', '$homeId', '$awayId', '$location', '$descriptions', '$img', 'no');");
 			if ($done) {
 				$isUploaded = move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $logoName);
+			} else {
+				echo "<script> console.log('Error')</script>";
 			}
 		}
 		header('location:fixtures_management.php');
 		die();
 	}
 }
+
+//getting all competitions 
+$compQuery = mysqli_query($con, "SELECT * FROM `competitions`");
+
+//getting all teams 
+$teamsQuery = mysqli_query($con, "SELECT * FROM `teams`");
+
+$teamsQuery2 = mysqli_query($con, "SELECT * FROM `teams`");
+
+
 ?>
 <div class="content pb-0">
 	<div class="animated fadeIn">
@@ -90,18 +109,27 @@ if (isset($_POST['submit'])) {
 							</div>
 							<div class="form-group">
 								<label for="homeTeam" class=" form-control-label">Competition</label>
-								<select name="competition" class="form-control" required value="<?php echo $competition ?>">
-									<option>Ikikombe cya amahoro</option>
-									<option>Ikikombe cya champion</option>
+								<select name="competition" class="form-control" required>
+									<?php while ($row = mysqli_fetch_array($compQuery)) { ?>
+										<option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+									<?php } ?>
 								</select>
 							</div>
 							<div class="form-group">
 								<label for="homeTeam" class=" form-control-label">Home Team ID</label>
-								<input type="text" name="homeId" placeholder="Enter home team ID" class="form-control" required value="<?php echo $homeId ?>">
+								<select name="homeId" class="form-control" required>
+									<?php while ($row = mysqli_fetch_array($teamsQuery)) { ?>
+										<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+									<?php } ?>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="AwayTeam" class=" form-control-label">Away Team ID</label>
-								<input type="text" name="awayId" placeholder="Enter Away Team ID" class="form-control" required value="<?php echo $awayId ?>">
+								<select name="awayId" class="form-control" required>
+									<?php while ($row = mysqli_fetch_array($teamsQuery2)) { ?>
+										<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+									<?php } ?>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="Location" class=" form-control-label">Location </label>

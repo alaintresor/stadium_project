@@ -1,11 +1,17 @@
 <?php
 include "connection.inc.php";
-$competition = $_GET['competition'];
+$id = $_GET['id'];
 
-$sql = "SELECT * FROM postponed_matchs,fixtures WHERE fixture_id=fixtures.id AND fixtures.competition='$competition'";
 
+$sql = "SELECT * FROM `booking_teckets` WHERE `fixture_id`='$id'";
 
 $res = mysqli_query($con, $sql);
+$res2 = mysqli_query($con, $sql);
+$data = mysqli_fetch_assoc($res2);
+$homeTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fixtures WHERE `teams`.`id`=`fixtures`.`home_team` AND  `fixtures`.`id`='{$data['fixture_id']}'"));
+
+$awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fixtures WHERE `teams`.`id`=`fixtures`.`away_team` AND  `fixtures`.`id`='{$data['fixture_id']}'"));
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +19,8 @@ $res = mysqli_query($con, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postponed Matches for <?php echo $competition ?></title>
+    <title><?php echo "Sold tickets on match $homeTeam[0] VS $awayTeam[0]";
+            ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="style.css" rel="stylesheet">
     <link href="assets/css/font-awesome.css" rel="stylesheet">
@@ -108,59 +115,58 @@ $res = mysqli_query($con, $sql);
             <label style="font-size:15px;">Smart Stadium Ticket Selling System</label><br>
             <label style="font-size:12px;">Email: smartstadium@gmail.com</label><br>
             <label style="font-size:12px;">Mobile: +250780640237</label><br>
+
             <br><br>
 
-            <strong style="font-size:14px;"> Report of Postponed Matches for
-                <?php
-                if ($competition == 1) {
-                    echo "Ikikombe cya mahoro";
-                } else {
-                    echo "Ikikombe cya champion";
-                } ?> </strong>
+            <strong style="font-size:14px;">
+                <?php echo "Sold tickets on match $homeTeam[0] VS $awayTeam[0]";
+                ?> </strong>
 
         </div>
         <table border="1" style="border-collapse: collapse;margin-top:20px;">
             <thead>
-                <tr>
-                    <th class="serial">#</th>
-                    <th>Fixture ID</th>
-                    <th>Home Team</th>
-                    <th>Away Team</th>
-                    <th>Reason</th>
-                    <th>From Date</th>
-                    <th>From Time</th>
-                    <th>Moved Date</th>
-                    <th>Moved Time</th>
-                </tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Ticket Id</th>
+                <th>Customer Name</th>
+                <th>Match</th>
+                <th>Saet</th>
+                <th>Number Of Seats</th>
+                <th>Amount</th>
             </thead>
-
             <tbody>
                 <?php
                 $i = 1;
                 while ($row = mysqli_fetch_assoc($res)) {
-                    $homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}' "));
-                    $awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}' "));
+                    $customerName = mysqli_fetch_array(mysqli_query($con, "SELECT `fullname` FROM `customers` WHERE `id`='{$row['customer_id']}'"));
+
+                    @$totalNberOfTicket = $totatNberOfTicket + $row['n_of_seats'];
+                    @$totalAmount = $totalAmount + $row['amount'];
                 ?>
                     <tr>
                         <td class="serial"><?php echo $i ?></td>
-                        <td><?php echo $row['fixture_id'] ?></td>
-                        <td><?php echo $homeTeam[0] ?></td>
-                        <td><?php echo $awayTeam[0] ?></td>
-                        <td><?php echo $row['reason'] ?></td>
-                        <td><?php echo $row['fromOn'] ?></td>
-                        <td><?php echo $row['fromAt'] ?></td>
-                        <td><?php echo $row['moved_date'] ?></td>
-                        <td><?php echo $row['moved_time'] ?></td>
+                        <td><?php echo $row['date'] ?></td>
+                        <td><?php echo $row['id'] ?></td>
+                        <td><?php echo $customerName[0] ?></td>
+                        <td><?php echo $homeTeam[0] . " VS " . $awayTeam[0] ?></td>
+                        <td><?php echo $row['seat'] ?></td>
+                        <td><?php echo $row['n_of_seats'] ?></td>
+                        <th><?php echo $row['amount'] ?> Frw</th>
                     </tr>
-                    <tr>
 
-                    <?php } ?>
-                    <td colspan="3"><b>Total Postponed Matches</b></td>
-                    <td colspan="6"><b><?php echo $i ?></b></td>
-                    </tr>
+                <?php $i++;
+                } ?>
+                <tr>
+                    <td colspan="3"><b> Total Tickets</b></td>
+                    <td colspan="5"><b> <?php echo $totalNberOfTicket ?></b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b> Total Amount</b></td>
+                    <td colspan="5"><b> <?php echo $totalAmount ?> Frw</b></td>
+                </tr>
             </tbody>
         </table>
-        <div class="right-footer" style="margin-left:65%;">
+        <div class="right-footer" style="margin-left:40%;">
             <p>Done at ................ on ..../..../20....</p>
             <p>Done by:</p>
             <p>Signature & stamp</p>

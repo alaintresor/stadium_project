@@ -115,10 +115,10 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
     <div class="container">
         <div class="logo">
             <br>
-            <label style="font-size:15px;">Marketing Application For Famers</label><br>
-            <label style="font-size:12px;">Email: applicatio@gmail.com</label><br>
+            <label style="font-size:15px;">Smart Stadium Ticket Selling System</label><br>
+            <label style="font-size:12px;">Email: smartstadium@gmail.com</label><br>
             <label style="font-size:12px;">Mobile: +250780640237</label><br>
-            <label style="font-size:12px;">Address: Huye, Rwanda</label><br>
+
             <br><br>
 
             <strong style="font-size:14px;">
@@ -135,14 +135,14 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
                 <th>Match</th>
                 <th>Saet</th>
                 <th>Number Of Seats</th>
-                <th>Amount</th>
+
             </thead>
             <tbody>
                 <?php
                 $i = 1;
                 while ($row = mysqli_fetch_assoc($res)) {
                     $customerName = mysqli_fetch_array(mysqli_query($con, "SELECT `fullname` FROM `customers` WHERE `id`='{$row['customer_id']}'"));
-
+                    @$totalNberOfTicket = $totalNberOfTicket + $row['n_of_seats'];
 
                 ?>
                     <tr>
@@ -153,11 +153,15 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
                         <td><?php echo $homeTeam[0] . " VS " . $awayTeam[0] ?></td>
                         <td><?php echo $row['seat'] ?></td>
                         <td><?php echo $row['n_of_seats'] ?></td>
-                        <th><?php echo $row['amount'] ?></th>
+
                     </tr>
 
                 <?php $i++;
                 } ?>
+                <tr>
+                    <td colspan="3"><b> Total Tickets</b></td>
+                    <td colspan="5"><b> <?php echo $totalNberOfTicket ?></b></td>
+                </tr>
             </tbody>
         </table>
         <div class="right-footer" style="margin-left:40%;">

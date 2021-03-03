@@ -11,7 +11,7 @@ $data = mysqli_query($con, "$quert");
 $row = mysqli_fetch_array($data);
 if (mysqli_num_rows($data)) {
     if ($row['status'] == 'used') { ?>
-        <h3 style="color:#adad16">The ticket with ID <b><?php echo $ticketId ?></b> is alread used </h3>
+        <h3 style="color:#adad16">The ticket with ID <b><?php echo $ticketId ?></b> is already used </h3>
     <?php } else if ($row['status'] == 'expired') {
     ?>
         <h3 style="color:red">The ticket with the ID <b><?php echo $ticketId ?></b> is expired</h3>

@@ -1,11 +1,9 @@
 <?php
 include "connection.inc.php";
 $competition = $_GET['competition'];
-if ($competition == 1) {
-    $sql = "SELECT results.id,fixture_id,home_team_result,away_team_result FROM results,fixtures WHERE fixture_id=fixtures.id AND fixtures.competition='Ikikombe cya mahoro' order by results.id asc";
-} else {
-    $sql = "SELECT results.id,fixture_id,home_team_result,away_team_result FROM results,fixtures WHERE fixture_id=fixtures.id AND fixtures.competition='Ikikombe cya champion' order by results.id asc";
-}
+
+$sql = "SELECT results.id,fixture_id,results.home_tem_result,away_team_result FROM results,fixtures WHERE fixture_id=fixtures.id AND fixtures.competition='$competition' order by results.id asc";
+
 
 $res = mysqli_query($con, $sql);
 ?>
@@ -15,8 +13,7 @@ $res = mysqli_query($con, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matches Results for <?php if ($competition == 1)  echo "Ikikombe cya mahoro";
-                                else echo "Ikikombe cya champion"; ?></title>
+    <title>Matches Results for <?php echo $competition ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="style.css" rel="stylesheet">
     <link href="assets/css/font-awesome.css" rel="stylesheet">
@@ -111,16 +108,12 @@ $res = mysqli_query($con, $sql);
             <label style="font-size:15px;">Smart Stadium Ticket Selling System</label><br>
             <label style="font-size:12px;">Email: smartstadium@gmail.com</label><br>
             <label style="font-size:12px;">Mobile: +250780640237</label><br>
-          
+
             <br><br>
 
             <strong style="font-size:14px;"> Report of Matches Results for
                 <?php
-                if ($competition == 1) {
-                    echo "Ikikombe cya mahoro";
-                } else {
-                    echo "Ikikombe cya champion";
-                } ?> </strong>
+                echo $competition ?> </strong>
 
         </div>
         <table border="1" style="border-collapse: collapse;margin-top:20px;">

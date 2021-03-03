@@ -29,19 +29,21 @@ if (isset($_POST['submit'])) {
 
     $name = get_safe_value($con, $_POST['name']);
     $division = get_safe_value($con, $_POST['division']);
+    if (isset($_GET['id']) && $_GET['id'] != '') {
+    } else {
+        $logo = "images/upload/" . $_FILES['logo']['name'];
+        $logoName =  $_FILES['logo']['name'];
+        $target_dir = "../images/upload/";
+        $target_photo = $target_dir . basename($_FILES["logo"]["name"]);
 
-    $logo = "../images/upload/" . $_FILES['logo']['name'];
-    $logoName =  $_FILES['logo']['name'];
-    $target_dir = "../images/upload/";
-    $target_photo = $target_dir . basename($_FILES["logo"]["name"]);
+        // Select file type
+        $imageFileType = strtolower(pathinfo($target_photo, PATHINFO_EXTENSION));
 
-    // Select file type
-    $imageFileType = strtolower(pathinfo($target_photo, PATHINFO_EXTENSION));
-
-    // Valid file extensions
-    $extensions_arr = array("jpg", "jpeg", "png", "gif");
-    if (!in_array($imageFileType, $extensions_arr)) {
-        $msg = "Please select real image file";
+        // Valid file extensions
+        $extensions_arr = array("jpg", "jpeg", "png", "gif");
+        if (!in_array($imageFileType, $extensions_arr)) {
+            $msg = "Please select real image file";
+        }
     }
 
     $res = mysqli_query($con, "select * from teams where name='$name'");

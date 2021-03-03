@@ -58,7 +58,10 @@ $con = mysqli_connect("localhost", "root", "", "stadium");
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
 									<img src="images/competition.png" alt="" width="150">
-									<h3>Competition: <b>4</b></h3>
+									<?php
+									$competitions = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM `competitions`"));
+									?>
+									<h3>Competition: <b><?php echo $competitions[0] ?></b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
@@ -73,7 +76,10 @@ $con = mysqli_connect("localhost", "root", "", "stadium");
 							<div class="col-lg-4">
 								<div id="dashbroad-card">
 									<img src="images/tickets.png" alt="" width="150">
-									<h3>Sold Tickets: <b>206</b></h3>
+									<?php
+									$tickets = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM `booking_teckets`  "));
+									?>
+									<h3>Sold Tickets: <b><?php echo $tickets[0] ?></b></h3>
 								</div>
 
 							</div>

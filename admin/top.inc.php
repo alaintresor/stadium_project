@@ -26,8 +26,8 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
    <link rel="stylesheet" href="assets/css/style.css">
    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script src="assets/js/jquery.min.js"></script>
+   <script src="assets/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -42,6 +42,9 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                <?php if ($_SESSION['ADMIN_ROLE'] == 0) { ?>
                   <li class="menu-item-has-children dropdown">
                      <a href="teams_management.php"> TEAMS </a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="competitions_management.php"> COMPETITONS </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
                      <a href="fixtures_management.php"> FIXTURES </a>
@@ -70,7 +73,7 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                   </li>
                <?php } else if ($_SESSION['ADMIN_ROLE'] == 2) { ?>
                   <li class="menu-item-has-children dropdown">
-                     <a href="check_teckets.php">CHECK TECKET </a>
+                     <a href="check_tickets.php">CHECK TICKET </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
                      <a href="stadiumAgent_reports.php"> REPORT </a>

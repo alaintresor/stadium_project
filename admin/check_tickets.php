@@ -6,13 +6,13 @@ require('top.inc.php');
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header"><strong>CHECK TECKETS</strong><small> </small></div>
+                    <div class="card-header"><strong>CHECK TICKETS</strong><small> </small></div>
 
                     <div class="card-body card-block">
                         <div class="row">
                             <div class="col-lg-10">
                                 <div class="form-group">
-                                    <label for="date" class=" form-control-label">Tecket Id</label>
+                                    <label for="date" class=" form-control-label">Ticket Id</label>
                                     <input type="number" placeholder="Enter ticket Id to check" name="id" class="form-control" id="ticketId" required>
                                 </div>
                             </div>

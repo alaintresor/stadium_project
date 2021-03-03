@@ -1,8 +1,8 @@
 <?php
 require('top.inc.php');
 $con = mysqli_connect("localhost", "root", "", "stadium");
-$query = "SELECT * FROM `fixtures` WHERE `status`='end'";
-$data = mysqli_query($con, "$query");
+$queryFixtures = "SELECT * FROM `fixtures` WHERE `status`='end'";
+$dataFixtures = mysqli_query($con, "$query");
 
 $data2 = mysqli_query($con, "$query");
 ?>

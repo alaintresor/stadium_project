@@ -1,11 +1,9 @@
 <?php
 include "connection.inc.php";
 $competition = $_GET['competition'];
-if ($competition == 1) {
-    $sql = "SELECT * FROM fixtures WHERE `status`!='end' AND fixtures.competition='Ikikombe cya mahoro' order by id asc";
-} else {
-    $sql = "SELECT * FROM fixtures WHERE `status`!='end' AND fixtures.competition='Ikikombe cya champion' order by id asc";
-}
+
+$sql = "SELECT * FROM fixtures WHERE `status`!='end' AND fixtures.competition='$competition' order by id asc";
+
 
 $res = mysqli_query($con, $sql);
 ?>
@@ -15,8 +13,7 @@ $res = mysqli_query($con, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matches Fixtures for <?php if ($competition == 1)  echo "Ikikombe cya mahoro";
-                                else echo "Ikikombe cya champion"; ?></title>
+    <title>Matches Fixtures for <?php echo $competition ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="style.css" rel="stylesheet">
     <link href="assets/css/font-awesome.css" rel="stylesheet">
@@ -115,11 +112,7 @@ $res = mysqli_query($con, $sql);
 
             <strong style="font-size:14px;"> Report of Matches Fixtures for
                 <?php
-                if ($competition == 1) {
-                    echo "Ikikombe cya mahoro";
-                } else {
-                    echo "Ikikombe cya champion";
-                } ?> </strong>
+                echo $competition ?> </strong>
 
         </div>
         <table border="1" style="border-collapse: collapse;margin-top:20px;">
