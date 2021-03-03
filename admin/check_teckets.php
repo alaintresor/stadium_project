@@ -19,16 +19,19 @@ if (isset($_POST['submit'])) {
                                 <div class="col-lg-10">
                                     <div class="form-group">
                                         <label for="date" class=" form-control-label">Tecket Id</label>
-                                        <input type="number" placeholder="Enter ticket Id to check" name="date" class="form-control" required>
+                                        <input type="number" placeholder="Enter ticket Id to check" name="id" class="form-control" id="ticketId" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <br>
-                                    <button class="btn">Check</button>
+                                    <button type="button" class="btn" onclick="checkTicket()" style="margin-top: 5px;margin-left: -0.5cm;">Check</button>
                                 </div>
                             </div>
-
-
+                            <hr>
+                            <div class="row">
+                                <div id="result">
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -36,7 +39,24 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
+<script>
+    const checkTicket = () => {
+        let ticketId = $("#ticketId").val();
+        $.ajax({
+            url: "checkTicket.php",
+            type: "POST",
+            data: {
+                ticketId
+            },
+            success: function(data) {
 
+                $("#result").html(data);
+
+            }
+
+        })
+    }
+</script>
 
 
 <?php

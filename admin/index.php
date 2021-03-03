@@ -31,7 +31,7 @@ $con = mysqli_connect("localhost", "root", "", "stadium");
 								<div id="dashbroad-card">
 									<img src="images/postponed.png" alt="" width="150">
 									<?php $postponed = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM postponed_matchs")) ?>
-									<h3>Postponed Match(es): <b> <?php echo $postponed[0] ?></b></h3>
+									<h3>Postponed Match: <b> <?php echo $postponed[0] ?></b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
@@ -50,9 +50,9 @@ $con = mysqli_connect("localhost", "root", "", "stadium");
 								<div id="dashbroad-card">
 									<img src="images/fixtures.png" alt="" width="150">
 									<?php
-									$fixtures = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM fixtures"));
+									$fixtures = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM fixtures  WHERE `status`!='end'"));
 									?>
-									<h3>Fixtures <b><?php echo $fixtures[0] ?></b></h3>
+									<h3>Match on Fixtures: <b><?php echo $fixtures[0] ?></b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
@@ -81,7 +81,7 @@ $con = mysqli_connect("localhost", "root", "", "stadium");
 								<div id="dashbroad-card">
 									<img src="images/postponed.png" alt="" width="150">
 									<?php $postponed = mysqli_fetch_array(mysqli_query($con, "SELECT COUNT(id) FROM postponed_matchs")) ?>
-									<h3>Postponed Match(es): <b> <?php echo $postponed[0] ?></b></h3>
+									<h3>Postponed Match: <b> <?php echo $postponed[0] ?></b></h3>
 								</div>
 							</div>
 							<div class="col-lg-4">
