@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2021 at 12:50 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Mar 03, 2021 at 10:56 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,8 +40,8 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`id`, `username`, `password`, `role`) VALUES
-(2, 'manager', '1234', '0'),
-(3, 'footballagent', '1234', '1'),
+(2, 'manager', '1234', '1'),
+(3, 'footballagent', '1234', '0'),
 (4, 'stadiumAgent', '1234', '2');
 
 -- --------------------------------------------------------
@@ -57,17 +57,18 @@ CREATE TABLE `booking_teckets` (
   `seat` varchar(20) NOT NULL,
   `n_of_seats` int(20) NOT NULL,
   `amount` int(123) NOT NULL,
-  `date` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+  `date` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `status` varchar(20) NOT NULL DEFAULT 'unused'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `booking_teckets`
 --
 
-INSERT INTO `booking_teckets` (`id`, `customer_id`, `fixture_id`, `seat`, `n_of_seats`, `amount`, `date`) VALUES
-(1, '1', '3', 'vvip', 0, 0, '2021-02-21 06:00:51.000000'),
-(2, '1', '4', 'VVIP', 2, 2000, '2021-03-02 11:05:48.439222'),
-(3, '1', '4', 'VIP', 1, 5000, '2021-03-02 11:46:31.788564');
+INSERT INTO `booking_teckets` (`id`, `customer_id`, `fixture_id`, `seat`, `n_of_seats`, `amount`, `date`, `status`) VALUES
+(1, '1', '3', 'vvip', 0, 0, '2021-02-21 06:00:51.000000', 'unused'),
+(2, '1', '4', 'VVIP', 2, 2000, '2021-03-02 11:05:48.439222', 'used'),
+(3, '1', '4', 'VIP', 1, 5000, '2021-03-02 11:46:31.788564', 'unused');
 
 -- --------------------------------------------------------
 
@@ -117,8 +118,8 @@ CREATE TABLE `fixtures` (
 --
 
 INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`, `status`) VALUES
-(2, '2021-03-01', '09:00', 'ikikombe cya mahoro', '1', '2', 'huye stadium', 'this match will make alto of changes on table', '../images/upload/250784170661_status_a8eefbfc28c74820be9c6bb7db21e197.jpg', 'deactive'),
-(3, '2021-03-01', '16:00', 'peace cup', '2', '4', 'kigali nation stadium', 'djhjhfjdf', '../images/upload/IMG_3122.JPG', 'active'),
+(2, '2021-03-04', '15:45', 'ikikombe cya mahoro', '1', '2', 'huye stadium', 'this match will make alto of changes on table', '../images/upload/250784170661_status_a8eefbfc28c74820be9c6bb7db21e197.jpg', 'postponed'),
+(3, '2021-03-01', '16:00', 'peace cup', '2', '4', 'kigali nation stadium', 'djhjhfjdf', '../images/upload/IMG_3122.JPG', 'end'),
 (4, '2021-03-10', '16:00', 'peace cup', '2', '1', 'kigali nation stadium', 'hhh sdhdhh asdhdshd hhhh', '../images/upload/IMG-20210228-WA0052.jpg', 'active');
 
 -- --------------------------------------------------------
@@ -131,6 +132,8 @@ CREATE TABLE `postponed_matchs` (
   `id` int(11) NOT NULL,
   `fixture_id` varchar(20) NOT NULL,
   `reason` varchar(1000) NOT NULL,
+  `fromOn` varchar(20) NOT NULL,
+  `fromAt` varchar(20) NOT NULL,
   `moved_date` varchar(20) NOT NULL,
   `moved_time` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -139,8 +142,8 @@ CREATE TABLE `postponed_matchs` (
 -- Dumping data for table `postponed_matchs`
 --
 
-INSERT INTO `postponed_matchs` (`id`, `fixture_id`, `reason`, `moved_date`, `moved_time`) VALUES
-(1, '2', 'weather', '2021-03-02', '15:45');
+INSERT INTO `postponed_matchs` (`id`, `fixture_id`, `reason`, `fromOn`, `fromAt`, `moved_date`, `moved_time`) VALUES
+(1, '2', 'weather', '2021-03-01', '09:00', '2021-03-04', '15:45');
 
 -- --------------------------------------------------------
 
