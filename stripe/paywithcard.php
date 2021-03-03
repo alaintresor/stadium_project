@@ -8,7 +8,12 @@ if($_POST['Avseat']<=0){
     ?>
     	 <center><script>alert('Check  available seat if is available or is empty');history.go(-1);</script></center>
          <?php
-}else{
+}else if($_POST['seats']>$_POST['Avseat']){ ?>
+
+    <center><script>alert('Provide available seat(s)');history.go(-1);</script></center>
+
+<?php }
+else{
      include('config.php'); 
 ?>
 <link rel="stylesheet" href="../css/style.css" type="text/css" media="all" />

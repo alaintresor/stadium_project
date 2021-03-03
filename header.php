@@ -17,8 +17,12 @@ session_start();
 <body>
 <div class="header">
     <div class="header-top">
-        <div class="wrap">
-              <div  class="nav-wrap" style="height:0px;line-height:30px">
+        <div class="col-md-12">
+        <div  class="col-md-6" style="color:white;">
+        <center>
+                    <b style="font-size:30px;color:rightgreen">Smart Stadium Ticket Selling System</b>   </center>
+			  </div>
+              <div  class="col-md-6" style="height:0px;line-height:30px">
                     <ul  class="group" id="example-one" style="height:0px;line-height:5px">
                        <li style="color:white" ><a href="index.php" style="color:white">Home</a></li>
                        <li style="color:white" ><a href="fixtures_events.php" style="color:white"> All Fixtures</a></li>
@@ -33,12 +37,12 @@ session_start();
    		</div>
     </div>
 <div class="block">
-	<div class="wrap">	
+	<div class="col-md-12">	
         <form action="process_search.php" id="reservation-form" method="post" onsubmit="myFunction()">
 		       <fieldset>
 		       	<div class="field" >
-                                <input type="text"  placeholder="Search  Here..." style="height:27px;width:500px"   id="search111" name="searching"> 
-                                <input type="submit"   value="Search" style="height:28px;padding-top:4px" id="button111">
+                                <input type="text"  placeholder="Search  Fixtures by Competition eg:peace cup" style="text-size:12; height:36px;width:500px"   id="search111" name="searching"> 
+                                <input type="submit"   value="Search" style="height:35px;padding-top:4px" id="button111">
     </div>       	
 		       </fieldset>
             </form>
