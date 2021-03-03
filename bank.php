@@ -5,21 +5,17 @@ if(!isset($_SESSION['user']))
 {
 	header('location:login.php');
 }
-$host = "127.0.0.1";
-    $user = "root";                     //Your Cloud 9 username
-    $pass = "";                                  //Remember, there is NO password by default!
-    $db = "db_concerts";                                  //Your database name you want to connect to
-    $port = 3306;
-     $con = mysqli_connect($host, $user, $pass, $db, $port)or die(mysql_error());
+include("config.php");
 extract($_POST);
-$queryAmount=mysqli_query($con,"select * from tbl_registration where user_id='".$_SESSION['user']."'");
+$_SESSION['amount']='100';
+$queryAmount=mysqli_query($con,"select * from customers where id='".$_SESSION['user']."'");
 $amount=mysqli_fetch_array($queryAmount);
 $amountAfter=$amount['totalAmount']-$_SESSION['amount'];
 if(mysqli_num_rows($queryAmount))
 {
   if($_SESSION['amount'] <= $amount['totalAmount']){
-mysqli_query($con,"update tbl_registration set totalAmount='$amountAfter' where user_id='".$_SESSION['user']."' ");
-mysqli_query($con,"update tbl_registration set lastUpdate=CURRENT_TIMESTAMP() where user_id='".$_SESSION['user']."' ");
+mysqli_query($con,"update customers set totalAmount='$amountAfter' where id='".$_SESSION['user']."' ");
+mysqli_query($con,"update customers set lastUpdate=CURRENT_TIMESTAMP() where id='".$_SESSION['user']."' ");
 
 
 }

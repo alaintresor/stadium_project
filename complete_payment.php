@@ -11,14 +11,14 @@ if(!isset($_SESSION['user']))
 }
 include('config.php');
 extract($_POST);
-$useramount2=mysqli_query($con,"select  * from tbl_registration where user_id='".$_SESSION['user']."'");
+$useramount2=mysqli_query($con,"select  * from customers where id='".$_SESSION['user']."'");
 $user2=mysqli_fetch_array($useramount2);
 $bookingAmount =$_SESSION['amount'];
 if($otp=="123456" && ($user2['totalAmount'] >= $_SESSION['amount'] ))
 {
     $bookid="BKID".rand(1000000,9999999);
     $tickid="TICKID".rand(1000000,9999999);
-    $query="insert into tbl_bookings values('$bookid','$tickid','".$_SESSION['stadium']."','".$_SESSION['user']."','".$_SESSION['show']."','".$_SESSION['screen']."','".$_SESSION['seats']."','".$_SESSION['amount']."','".$_SESSION['date']."',CURDATE(),'1')";
+   // $query="insert into tbl_bookings values('$bookid','$tickid','".$_SESSION['stadium']."','".$_SESSION['user']."','".$_SESSION['show']."','".$_SESSION['screen']."','".$_SESSION['seats']."','".$_SESSION['amount']."','".$_SESSION['date']."',CURDATE(),'1')";
     mysqli_query($con,$query);
     $_SESSION['success']="Booking Successfully Completed";
 }

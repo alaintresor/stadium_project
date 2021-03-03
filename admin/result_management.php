@@ -72,7 +72,7 @@ $res = mysqli_query($con, $sql);
                                             <td><?php echo $fixture['date'] ?></td>
                                             <td><?php echo $fixture['time'] ?></td>
                                             <td><?php echo $homeTeam[0] ?></td>
-                                            <td><?php echo $row['home_team_result'] ?></td>
+                                            <td><?php echo $row['home_tem_result'] ?></td>
                                             <td><?php echo $row['away_team_result'] ?></td>
                                             <td><?php echo $awayTeam[0] ?></td>
 
