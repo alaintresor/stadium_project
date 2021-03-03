@@ -25,16 +25,16 @@
 									<img src="<?php echo $fix['cover_image']; ?>" alt="no image"/>
 								</div>
 								<div class="desc span_3_of_2">
-									<p class="p-link" style="font-size:15px">Location: <?php echo $fix['location']; ?></p>
-							<p class="p-link" style="font-size:15px">Date: <?php echo date('d-M-Y',strtotime($fix['date'])); ?> Time:<?php echo $fix['time'] ?></p>
-									<p class="p-link" style="font-size:15px">Description: <?php echo $fix['description']; ?></p>
-									<p class="p-link" style="font-size:15px">Competition: <?php echo $fix['competition']; ?></p>
+									<p class="p-link" style="font-size:15px"><b>Location:</b> <?php echo $fix['location']; ?></p>
+							<p class="p-link" style="font-size:15px"><b>Date:</b> <?php echo date('d-M-Y',strtotime($fix['date'])); ?> Time:<?php echo $fix['time'] ?></p>
+									<p class="p-link" style="font-size:15px"><b>Description:</b> <?php echo $fix['description']; ?></p>
+									<p class="p-link" style="font-size:15px"><b>Competition:</b> <?php echo $fix['competition']; ?></p>
 									<p class="p-link" style="font-size:15px">
-									Seats:<ul><li> VVIP SEATS: No:<?php echo $seat[1]; ?>, Price:<?php echo $seat[2]; ?></li>
-									<li>VIP SEATS: No: <?php echo $seat[3]; ?> ,
-									Price:<?php echo $seat[4]; ?></li>
-									<li>Roofed SEATS: No:<?php echo $seat[5]; ?>,
-									 Price:<?php echo $seat[6]; ?></li><li>UnRoofed SEATS: No:<?php echo $seat[7]; ?> ,Price:<?php echo $seat[8]; ?></li> </p>
+									<b>Seats:</b><ul><li> VVIP SEATS: No:<?php echo $seat[1]; ?>, Price:<?php echo $seat[2]; ?></li>
+									<li>VIP SEATS: No: <?php echo $seat[4]; ?> ,
+									Price:<?php echo $seat[5]; ?></li>
+									<li>Roofed SEATS: No:<?php echo $seat[6]; ?>,
+									 Price:<?php echo $seat[7]; ?></li><li>UnRoofed SEATS: No:<?php echo $seat[8]; ?> ,Price:<?php echo $seat[9]; ?></li> </p>
 									<p class="p-link" style="font-size:15px">
 									<a href="booking.php?id=<?php echo $_GET['id'] ?>"><button class='btn btn-primary'>Book Now</button></a>
 									</p>

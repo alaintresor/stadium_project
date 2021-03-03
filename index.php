@@ -11,9 +11,9 @@ include('header.php');
 				<h3>Upcoming Matches</h3>
 				<div class="content-left">
 				
-					<?php $today=date("Y-m-d"); $sel = $con->query("SELECT * FROM fixtures WHERE date>'$today' AND status ='active'");
+					<?php $today=date("Y-m-d"); $sel = $con->query("SELECT * FROM fixtures WHERE date>'$today' AND status ='active' ORDER BY date desc limit 3");
 					while ($row = mysqli_fetch_array($sel)) {
-
+                 
 						$sel1 = $con->query("SELECT name,logo FROM teams WHERE id='" . $row['home_team'] . "'");
 						$sel2 = $con->query("SELECT name,logo FROM teams WHERE id='" . $row['away_team'] . "'");
 						$res = mysqli_fetch_array($sel1);
