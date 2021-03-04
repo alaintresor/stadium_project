@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			$done = mysqli_query($con, "INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`, `status`) VALUES (NULL, '$date', '$time', '$competition', '$homeId', '$awayId', '$location', '$descriptions', '$img', 'no');");
 			if ($done) {
-				$isUploaded = move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $logoName);
+				$isUploaded = move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $imgName);
 			} else {
 				echo "<script> console.log('Error')</script>";
 			}
