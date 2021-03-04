@@ -12,7 +12,7 @@ include('header.php');
 					<?php $today=date("Y-m-d"); $sel = $con->query("SELECT * FROM fixtures WHERE date>'$today' AND status ='active' ORDER BY date desc limit 3");
 					if(mysqli_num_rows($sel)<=0){ ?>
 						<center>
-						<h1 style="background:yellow">Smart Stadium Ticket Selling System</h1>
+						<h1 style="background:yellow">nothing to show</h1>
 					</center>
 					<?php }else{
 					while ($row = mysqli_fetch_array($sel)) {

@@ -3,7 +3,7 @@
 	$apiKey = urlencode('QCZCGpsNseI-gd0snkBj4zC49shTyTbP1AAW9AgNMX');
 	
 	// Message details
-	$numbers = array(+250780640237, );
+	$numbers = array(+250780591269, );
 	$sender = urlencode('Smart Ticket System');
 	$message = rawurlencode('This is your message');
  
