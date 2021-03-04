@@ -140,7 +140,7 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
                 while ($row = mysqli_fetch_assoc($res)) {
                     $customerName = mysqli_fetch_array(mysqli_query($con, "SELECT `fullname` FROM `customers` WHERE `id`='{$row['customer_id']}'"));
 
-                    @$totalNberOfTicket = $totatNberOfTicket + $row['n_of_seats'];
+                    @$totalNberOfTicket = $totatNberOfTicket + $i;
                     @$totalAmount = $totalAmount + $row['amount'];
                 ?>
                     <tr>
