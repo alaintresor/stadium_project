@@ -1,15 +1,6 @@
 <?php
 include '../config.php';
   require_once('../stripe/config.php');
-// $id=$_GET['id'];
-// $sel="SELECT `school_id` FROM `applications` WHERE `student_id`='$id'";
-// $query=mysqli_query($connect,$sel);
-// $result=mysqli_fetch_array($query);
-//echo $result[0];
-// $id1=$result[0];
-// $query1=mysqli_query($connect,"SELECT reg_fee,name FROM schools WHERE id='$id1'");
-// $result2=mysqli_fetch_array($query1);
-// $amount=$result2[0];
 
   $token  = $_POST['stripeToken'];
   $email  = $_POST['stripeEmail'];
@@ -27,24 +18,59 @@ include '../config.php';
    $day=date("d");
    $month=date("m");
    $year=2000+date("y");
-   
-     echo "<h1>Successfully Transaction</h1>";
-   
+   $num = rand(9999999,100000);
+   $tckCode="RNTC".$num;
+   $sele=$con->query("SELECT * FROM customers WHERE id='".$_POST['user_id']."'");
+   $res1=mysqli_fetch_array($sele);
+   $sel2=$con->query("SELECT * FROM fixtures WHERE id='".$_POST['fix_id']."'");
+   $fix = mysqli_fetch_array($sel2);
+   $selt = $con->query("SELECT name,logo FROM teams WHERE id='" . $fix['home_team'] . "'");
+   $selt2 = $con->query("SELECT name,logo FROM teams WHERE id='" . $fix['away_team'] . "'");
+   $rest = mysqli_fetch_array($selt);
+   $rest2 = mysqli_fetch_array($selt2);
    //update if payfull successed
-   $insert=mysqli_query($con,"INSERT INTO booking_teckets(customer_id,fixture_id,seat,n_of_seats,amount) VALUES('".$_POST['user_id']."','".$_POST['fix_id']."','".$_POST['cat']."','".$_POST['seats']."','".$_POST['amount']."') "); 
-   if($_POST['cat']=='vip'){
+   $insert=mysqli_query($con,"INSERT INTO booking_teckets(id,customer_id,fixture_id,seat,n_of_seats,amount) VALUES('$tckCode','".$_POST['user_id']."','".$_POST['fix_id']."','".$_POST['cat']."','".$_POST['seats']."','".$_POST['amount']."') "); 
+   $category=$_POST['cat'];
+   if( $category=='vip'){
     $update_seat=$con->query("UPDATE seats_and_prices SET vip_seats=vip_seats-'".$_POST['seats']."' WHERE fixture_id='".$_POST['fix_id']."'");
-   }else if($_POST['cat']=='vvip'){
+   }else if( $category=='vvip'){
     $update_seat=$con->query("UPDATE seats_and_prices SET vvip_seats=vvip_seats-'".$_POST['seats']."' WHERE fixture_id='".$_POST['fix_id']."'");
-   }else if($_POST['cat']=='roofed'){
+   }else if($category=='roofed'){
     $update_seat=$con->query("UPDATE seats_and_prices SET roofed_seats=roofed_seats-'".$_POST['seats']."' WHERE fixture_id='".$_POST['fix_id']."'");
    }else{
     $update_seat=$con->query("UPDATE seats_and_prices SET unroofed_seats=unroofed_seats-'".$_POST['seats']."' WHERE fixture_id='".$_POST['fix_id']."'");
    }
 
-   if ($insert && $update) {
-    echo "<center><script>alert('Successfully charged')</center>";
-  //  echo "<center><script>alert('Successfully charged');window.open('receipt.php','_self');</center>";
+   if ($insert) {
+
+
+   }else{
+     echo "not".mysqli_error($con);
    }
+   
+ $phone = "+25".$res1['telephone'];
+ $message= "Dear ".$res1['fullname'].", your ticket reservation code is".$tckCode." for ".$rest[0]." Vs ".$rest2[0]." at ".$fix['location']." on ".$fix['date'].", ".$fix['time'].".  Amount paid: ".$_POST['amount']."   THANK YOU FOR BOOKING WITH US";
+  $curl = curl_init();
+ curl_setopt_array($curl, array(
+   CURLOPT_URL => 'https://api.mista.io/sms',
+   CURLOPT_RETURNTRANSFER => true,
+   CURLOPT_ENCODING => '',
+   CURLOPT_MAXREDIRS => 10,
+   CURLOPT_TIMEOUT => 0,
+   CURLOPT_FOLLOWLOCATION => true,
+   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+   CURLOPT_CUSTOMREQUEST => 'POST',
+   CURLOPT_POSTFIELDS => array('to' => $phone,'from' => 'SmarTicket','unicode' => '0','sms' => $message,'action' => 'send-sms'),
+   CURLOPT_HTTPHEADER => array(
+     'x-api-key:andrass7'
+   ),
+ ));
+ 
+ $response = curl_exec($curl);
+ 
+ curl_close($curl);
+ //echo "<center><script><script>history.go(-2)</script></center>";
+ echo "<center><script>window.open();history.go(-2)</script></center>";
+
   
 ?>
