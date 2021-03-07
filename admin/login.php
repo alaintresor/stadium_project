@@ -10,16 +10,14 @@ if (isset($_POST['submit'])) {
    $count = mysqli_num_rows($res);
    if ($count > 0) {
       $row = mysqli_fetch_assoc($res);
-      if ($row['status'] == '0') {
-         $msg = "Account deactivated";
-      } else {
-         $_SESSION['ADMIN_LOGIN'] = 'yes';
-         $_SESSION['ADMIN_ID'] = $row['id'];
-         $_SESSION['ADMIN_USERNAME'] = $username;
-         $_SESSION['ADMIN_ROLE'] = $row['role'];
-         header('location:index.php');
-         die();
-      }
+
+      $_SESSION['ADMIN_LOGIN'] = 'yes';
+      $_SESSION['ADMIN_ID'] = $row['id'];
+      $_SESSION['ADMIN_USERNAME'] = $row['fullname'];
+      $_SESSION['ADMIN_ROLE'] = $row['role'];
+      $_SESSION['ADMIN_STADIUM'] = $row['stadium_id'];
+      header('location:index.php');
+      die();
    } else {
       $msg = "PLEASE ENTER CORRECT LOGIN DETAILS";
    }

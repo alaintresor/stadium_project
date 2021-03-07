@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 				echo "<script> console.log('WE')</script>";
 			} else $msg = "Error: " . mysqli_error($con);
 		} else {
-			$done = mysqli_query($con, "INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`, `status`) VALUES (NULL, '$date', '$time', '$competition', '$homeId', '$awayId', '$location', '$descriptions', '$img', 'no');");
+			$done = mysqli_query($con, "INSERT INTO `fixtures` (`id`, `date`, `time`, `competition`, `home_team`, `away_team`, `location`, `description`, `cover_image`) VALUES (NULL, '$date', '$time', '$competition', '$homeId', '$awayId', '$location', '$descriptions', '$img');");
 			if ($done) {
 				$isUploaded = move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $imgName);
 			} else {
@@ -87,7 +87,7 @@ $teamsQuery = mysqli_query($con, "SELECT * FROM `teams`");
 
 $teamsQuery2 = mysqli_query($con, "SELECT * FROM `teams`");
 
-
+$stadiumQuery = mysqli_query($con, "SELECT * FROM stadiums");
 ?>
 <div class="content pb-0">
 	<div class="animated fadeIn">
@@ -133,7 +133,17 @@ $teamsQuery2 = mysqli_query($con, "SELECT * FROM `teams`");
 							</div>
 							<div class="form-group">
 								<label for="Location" class=" form-control-label">Location </label>
-								<input type="text" name="location" placeholder="Enter match loction" class="form-control" required value="<?php echo $location ?>">
+								<select name="location" class="form-control" required>
+									<?php
+									while ($row = mysqli_fetch_array($stadiumQuery)) {
+										if ($row['name'] == $location) { ?>
+											<option selected><?php echo $row['name'] ?></option>
+										<?php	} else { ?>
+											<option><?php echo $row['name'] ?></option>
+									<?php	}
+									}
+									?>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="descriptions" class=" form-control-label">Descriptions </label>

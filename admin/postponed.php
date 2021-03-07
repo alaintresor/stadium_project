@@ -16,7 +16,7 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
     }
 }
 
-$sql = "SELECT * FROM fixtures WHERE `status`='postponed' order by date,time asc ";
+$sql = "SELECT * FROM fixtures WHERE `status`='postponed' AND `location`=(SELECT `name`  FROM `stadiums` WHERE `id`='{$_SESSION['ADMIN_STADIUM']}') order by date,time asc ";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">

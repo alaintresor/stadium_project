@@ -11,7 +11,7 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
 	}
 }
 
-$sql = "select * from fixtures WHERE `status`!='end' order by id desc";
+$sql = "SELECT * from fixtures WHERE `status`!='end' order by id desc";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">

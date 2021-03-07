@@ -28,15 +28,16 @@ $selt = $con->query("SELECT name,logo FROM teams WHERE id='" . $fix['home_team']
 $selt2 = $con->query("SELECT name,logo FROM teams WHERE id='" . $fix['away_team'] . "'");
 $rest = mysqli_fetch_array($selt);
 $rest2 = mysqli_fetch_array($selt2);
+$date = date("Y-m-d");
 //update if payfull successed
-$inseryQuery = "INSERT INTO `booking_teckets` (`id`, `customer_id`, `fixture_id`, `seat`, `n_of_seats`, `amount`) VALUES ('$tckCode','{$_POST['user_id']}','{$_POST['fix_id']}','{$_POST['cat']}','{$_POST['seats']}','{$_POST['amount']}');";
+$inseryQuery = "INSERT INTO `booking_teckets` (`id`, `customer_id`, `fixture_id`, `seat`, `n_of_seats`, `amount`,`date`) VALUES ('$tckCode','{$_POST['user_id']}','{$_POST['fix_id']}','{$_POST['cat']}','{$_POST['seats']}','{$_POST['amount']}','$date');";
 $insert = mysqli_query($con, "$inseryQuery");
 $category = $_POST['cat'];
-if ($category == 'vip') {
+if ($category == 'VIP') {
   $update_seat = $con->query("UPDATE seats_and_prices SET vip_seats=vip_seats-'" . $_POST['seats'] . "' WHERE fixture_id='" . $_POST['fix_id'] . "'");
-} else if ($category == 'vvip') {
+} else if ($category == 'VVIP') {
   $update_seat = $con->query("UPDATE seats_and_prices SET vvip_seats=vvip_seats-'" . $_POST['seats'] . "' WHERE fixture_id='" . $_POST['fix_id'] . "'");
-} else if ($category == 'roofed') {
+} else if ($category == 'Roofed') {
   $update_seat = $con->query("UPDATE seats_and_prices SET roofed_seats=roofed_seats-'" . $_POST['seats'] . "' WHERE fixture_id='" . $_POST['fix_id'] . "'");
 } else {
   $update_seat = $con->query("UPDATE seats_and_prices SET unroofed_seats=unroofed_seats-'" . $_POST['seats'] . "' WHERE fixture_id='" . $_POST['fix_id'] . "'");

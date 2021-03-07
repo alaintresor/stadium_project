@@ -13,7 +13,7 @@ require('top.inc.php');
                             <div class="col-lg-10">
                                 <div class="form-group">
                                     <label for="date" class=" form-control-label">Ticket Id</label>
-                                    <input type="number" placeholder="Enter ticket Id to check" name="id" class="form-control" id="ticketId" required>
+                                    <input type="text" placeholder="Enter ticket Id to check" name="id" class="form-control" id="ticketId" required>
                                 </div>
                             </div>
                             <div class="col-lg-2">

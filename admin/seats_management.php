@@ -10,7 +10,7 @@ if (isset($_GET['type']) && $_GET['type'] != '') {
     }
 }
 
-$sql = "SELECT * FROM `seats_and_prices` ORDER BY id DESC";
+$sql = "SELECT * FROM `seats_and_prices`,`fixtures` WHERE fixture_id=fixtures.id AND `location`=(SELECT `name`  FROM `stadiums` WHERE `id`='{$_SESSION['ADMIN_STADIUM']}') ";
 $res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
@@ -67,7 +67,7 @@ $res = mysqli_query($con, $sql);
                                             <td>
                                                 <?php
 
-                                                echo "<span class='badge badge-edit'><a href='manage_vendor_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
+                                                echo "<span class='badge badge-edit'><a href='manage_seats_management.php?id=" . $row['id'] . "'>Edit</a></span>&nbsp;";
 
                                                 echo "<span class='badge badge-delete'><a href='?type=delete&id=" . $row['id'] . "'>Delete</a></span>";
 

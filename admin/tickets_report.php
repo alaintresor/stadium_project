@@ -2,11 +2,9 @@
 include "connection.inc.php";
 $id = $_GET['id'];
 $type = $_GET['type'];
-if ($type == 1) {
-    $sql = "SELECT * FROM `booking_teckets` WHERE `fixture_id`='$id' AND `status`='used'";
-} else {
-    $sql = "SELECT * FROM `booking_teckets` WHERE `fixture_id`='$id' AND `status`='expired'";
-}
+
+$sql = "SELECT * FROM `booking_teckets` WHERE `fixture_id`='$id' AND `status`='used'";
+
 
 $res = mysqli_query($con, $sql);
 $res2 = mysqli_query($con, $sql);
@@ -22,8 +20,7 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php if ($type == 1)  echo "Checked tickets on match $homeTeam[0] VS $awayTeam[0]";
-            else echo "Expired tickets on match $homeTeam[0] VS $awayTeam[0]"; ?></title>
+    <title><?php echo "Tickets checked by {$_SESSION['ADMIN_USERNAME']} on match $homeTeam[0] VS $awayTeam[0]"; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="style.css" rel="stylesheet">
     <link href="assets/css/font-awesome.css" rel="stylesheet">
@@ -122,8 +119,8 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
             <br><br>
 
             <strong style="font-size:14px;">
-                <?php if ($type == 1)  echo "Checked tickets on match $homeTeam[0] VS $awayTeam[0]";
-                else echo "Expired tickets on match $homeTeam[0] VS $awayTeam[0]"; ?> </strong>
+                <?php echo "Tickets checked by {$_SESSION['ADMIN_USERNAME']} on match $homeTeam[0] VS $awayTeam[0]";
+                ?> </strong>
 
         </div>
         <table border="1" style="border-collapse: collapse;margin-top:20px;width: 20cm;">
@@ -139,10 +136,11 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
             </thead>
             <tbody>
                 <?php
-                $i = 1;
+                $i = 0;
                 while ($row = mysqli_fetch_assoc($res)) {
+                    $i++;
                     $customerName = mysqli_fetch_array(mysqli_query($con, "SELECT `fullname` FROM `customers` WHERE `id`='{$row['customer_id']}'"));
-                    @$totalNberOfTicket = $totalNberOfTicket + $row['n_of_seats'];
+
 
                 ?>
                     <tr>
@@ -156,11 +154,11 @@ $awayTeam = mysqli_fetch_array(mysqli_query($con, "SELECT `name` FROM `teams`,fi
 
                     </tr>
 
-                <?php $i++;
+                <?php
                 } ?>
                 <tr>
                     <td colspan="3"><b> Total Tickets</b></td>
-                    <td colspan="5"><b> <?php echo $totalNberOfTicket ?></b></td>
+                    <td colspan="5"><b> <?php echo $i ?></b></td>
                 </tr>
             </tbody>
         </table>

@@ -1,10 +1,9 @@
 <?php
 require('top.inc.php');
-$con = mysqli_connect("localhost", "root", "", "stadium");
-$queryFixtures = "SELECT * FROM `fixtures` WHERE `status`='end'";
-$dataFixtures = mysqli_query($con, "$query");
+$queryFixtures = "SELECT * FROM `fixtures`,booking_teckets WHERE fixtures.id=booking_teckets.fixture_id AND booking_teckets.stadiumAgent_id='{$_SESSION['ADMIN_ID']}'";
+$dataFixtures = mysqli_query($con, "$queryFixtures");
 
-$data2 = mysqli_query($con, "$query");
+// $data2 = mysqli_query($con, "$query");
 ?>
 <style>
     #dashbroad-card {
@@ -29,7 +28,7 @@ $data2 = mysqli_query($con, "$query");
                                                 <label for="date" class=" form-control-label">CHECKED TICKETS</label>
                                                 <select id="checked" class="form-control">
                                                     <?php
-                                                    while ($row = mysqli_fetch_array($data)) {
+                                                    while ($row = mysqli_fetch_array($dataFixtures)) {
                                                         $homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}'"));
 
                                                         $awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}'"));
@@ -45,30 +44,7 @@ $data2 = mysqli_query($con, "$query");
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-lg-6">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div class="form-group">
-                                                <label for="date" class=" form-control-label">EXPIRED TICKETS</label>
-                                                <select id="exired" class="form-control">
-                                                    <?php
-                                                    while ($row2 = mysqli_fetch_array($data2)) {
-                                                        $homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row2['home_team']}'"));
 
-                                                        $awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row2['away_team']}'"));
-                                                    ?>
-                                                        <option value="<?php echo $row2['id'] ?>"><?php echo $row2['date'] ?>: <?php echo $homeTeam[0] ?> VS <?php echo $awayTeam[0] ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button class="btn" onclick="window.open(`tickets_report.php?id=${$('#expired').val()}&type=2`)" style="margin-top:10px">Generete</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
                         </div>
                         <br><br><br><br>
 

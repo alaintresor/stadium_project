@@ -6,7 +6,7 @@ isManger();
 $compQuery = mysqli_query($con, "SELECT * FROM `competitions`");
 $compQuery2 = mysqli_query($con, "SELECT * FROM `competitions`");
 $compQuery3 = mysqli_query($con, "SELECT * FROM `competitions`");
-$queryFixtures = "SELECT * FROM `fixtures` WHERE `status`='end'";
+$queryFixtures = "SELECT * FROM `fixtures` WHERE `status`='end' AND `location`=(SELECT `name`  FROM `stadiums` WHERE `id`='{$_SESSION['ADMIN_STADIUM']}')";
 $dataFixtures = mysqli_query($con, "$queryFixtures");
 
 ?>

@@ -50,11 +50,14 @@ if (isset($_POST['submit'])) {
             mysqli_query($con, $update_sql);
         } else {
             mysqli_query($con, "INSERT INTO `seats_and_prices` (`id`, `fixture_id`, `vvip_seats`, `vvip_price`, `vip_seats`, `vip_price`, `roofed_seats`, `roofed_price`, `unroofed_seats`, `unroofed_price`) VALUES (NULL, '$fixtureId', '$vvipNber', '$vvipPrice', '$vipNber', '$vipPrice', '$roofedNber', '$roofedPrice', '$unroofedNber', '$unroofedPrice');");
+            mysqli_query($con, "UPDATE fixtures SET status='end' WHERE id='$fixtureId'");
         }
         header('location:seats_management.php');
         die();
     }
 }
+$queryFixtures = "SELECT * FROM `fixtures` WHERE  `location`=(SELECT `name`  FROM `stadiums` WHERE `id`='{$_SESSION['ADMIN_STADIUM']}')";
+$dataFixtures = mysqli_query($con, "$queryFixtures");
 ?>
 <div class="content pb-0">
     <div class="animated fadeIn">
@@ -67,8 +70,17 @@ if (isset($_POST['submit'])) {
 
 
                             <div class="form-group">
-                                <label for="date" class=" form-control-label">Fixture Id</label>
-                                <input type="text" name="fixtureId" onchange="selectTeams()" id="fixture" class="form-control" required value="<?php echo $fixtureId ?>">
+                                <label for="date" class=" form-control-label">Match</label>
+                                <select id="checked" class="form-control" name="fixtureId" required>
+                                    <?php
+                                    while ($row = mysqli_fetch_array($dataFixtures)) {
+                                        $homeTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['home_team']}'"));
+
+                                        $awayTeam = mysqli_fetch_array(mysqli_query($con, "select name from teams where id='{$row['away_team']}'"));
+                                    ?>
+                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['date'] ?>: <?php echo $homeTeam[0] ?> VS <?php echo $awayTeam[0] ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
                             <div id="show" style="display:none">
                                 <span id="home"></span> VS <span id="away"></span>

@@ -44,6 +44,12 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                      <a href="teams_management.php"> TEAMS </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
+                     <a href="stadium_management.php"> STADIUMS </a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="stadiumManager_management.php"> STADIUM'S MANAGERS </a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
                      <a href="competitions_management.php"> COMPETITONS </a>
                   </li>
                   <li class="menu-item-has-children dropdown">
@@ -59,6 +65,9 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                      <a href="football_agent_reports.php"> REPORT</a>
                   </li>
                <?php } else if ($_SESSION['ADMIN_ROLE'] == 1) { ?>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="stadiumAgent_management.php"> STADIUM AGENTS </a>
+                  </li>
                   <li class="menu-item-has-children dropdown">
                      <a href="select_fixtures.php"> SELECT FIXTURES </a>
                   </li>
@@ -86,7 +95,13 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
       <header id="header" class="header">
          <div class="top-left">
             <div class="navbar-header">
-               <a class="navbar-brand" href="index.php">Admin Panel</a>
+               <?php if ($_SESSION['ADMIN_ROLE'] == 0) { ?>
+                  <a class="navbar-brand" href="index.php">Football Agent Panel</a>
+               <?php } else if ($_SESSION['ADMIN_ROLE'] == 1) { ?>
+                  <a class="navbar-brand" href="index.php">Stadium Manager Panel</a>
+               <?php } else { ?>
+                  <a class="navbar-brand" href="index.php">Stadium Agent Panel</a>
+               <?php } ?>
                <br>
             </div>
          </div>
@@ -95,6 +110,7 @@ if (isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] != '') {
                <div class="user-area dropdown float-right">
                   <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">WELCOME <?php echo $_SESSION['ADMIN_USERNAME'] ?></a>
                   <div class="user-menu dropdown-menu">
+                     <a class="nav-link" href="settings.php?id=<?php echo $_SESSION['ADMIN_ID'] ?>"><i class="fa fa-power-off"></i>SETTINGS</a>
                      <a class="nav-link" href="logout.php"><i class="fa fa-power-off"></i>LOGOUT</a>
                   </div>
                </div>
